@@ -1,0 +1,1 @@
+I'm making an eCommerce website using django and vue.js
