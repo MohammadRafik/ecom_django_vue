@@ -3,6 +3,8 @@ from . import views
 
 app_name = 'mainapp'
 urlpatterns = [
-    path('', views.testingVue, name='testingVue'),
+    path('testVue', views.testing_vue, name='testingvue'),
+    path('testbase', views.test_base, name='testbase'),
+    path('', views.index, name='index'),
 
 ]
