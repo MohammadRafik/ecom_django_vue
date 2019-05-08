@@ -1,1 +1,1 @@
-I'm making an eCommerce website using django and vue.js
+eCommerce website made with django and vue.js
