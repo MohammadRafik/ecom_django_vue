@@ -6,5 +6,4 @@ urlpatterns = [
     path('testVue', views.testing_vue, name='testingvue'),
     path('testbase', views.test_base, name='testbase'),
     path('', views.index, name='index'),
-
 ]
