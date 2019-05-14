@@ -17,13 +17,13 @@
 <body>
     <div id="app">
 
-        {% include 'header.html' %}
+        {% include 'base/header.html' %}
 
         <div class="container">
             {% block content %}
             {% endblock %}
         </div>
-        {% include 'footer.html' %}
+        {% include 'base/footer.html' %}
     </div>
     {% render_bundle 'main' %}
 </body>
