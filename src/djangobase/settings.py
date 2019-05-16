@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # custom
     'mainapp.apps.MainappConfig',
-    'users.apps.UsersConfig',
+    'accounts.apps.AccountsConfig',
 
 
 
