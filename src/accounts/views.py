@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from accounts.forms import RegisterationForm
+from accounts.forms import RegistrationForm
 
 # Create your views here.
 def register(request):
@@ -7,13 +7,13 @@ def register(request):
 
 def submit_register(request):
     if request.method == 'POST':
-        form = RegisterationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('admin/auth/user')
 
     else:
-        form = RegisterationForm()
+        form = RegistrationForm()
 
         args = { 'form': form }
         return render(request, 'accounts/register.html', args)
