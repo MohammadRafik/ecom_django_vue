@@ -7,10 +7,11 @@
 <div class="form-group pt-5">
     <div class="row justify-content-left">
         <div class="col-md-8">
-            <form onsubmit="" action="{%url 'accounts:submit_register' %}" method="post">
-            {% csrf_token %}
+            <form onsubmit="" action="{%url 'accounts:register' %}" method="post">
+                {% csrf_token %}
                 <h2> Registration </h2>
                 <br>
+                {% comment %} {{ form }} {% endcomment %}
                 <div class="form-group row">
                     <label for="full_name" class="col-md-4 col-form-label text-md-right">Full Name</label>
                     <div class="col-md-6">
