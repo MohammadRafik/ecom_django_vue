@@ -11,11 +11,12 @@
                 {% csrf_token %}
                 <h2> Registration </h2>
                 <br>
+                {% comment %} you would use the line below if you dont have custom html template for all the inputs {% endcomment %}
                 {% comment %} {{ form }} {% endcomment %}
                 <div class="form-group row">
                     <label for="full_name" class="col-md-4 col-form-label text-md-right">Full Name</label>
                     <div class="col-md-6">
-                        <input type="text" id="username" class="form-control" name="username">
+                        <input type="text" id="username" class="form-control" name="username" >
                     </div>
                 </div>
 

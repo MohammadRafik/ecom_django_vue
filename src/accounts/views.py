@@ -1,17 +1,23 @@
 from django.shortcuts import render, redirect
 from accounts.forms import RegistrationForm
+from django.views import View
 
 # Create your views here.
-def register(request):
+class Register(View):
+    template_name = 'accounts/register.html'
+    form_class = RegistrationForm
 
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name,{'form':form})
+    
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             return redirect('accounts')
-    else:
-        form = RegistrationForm()
-    
-    args = { 'form': form }
-    return render(request, 'accounts/register.html', args)
+        else:
+            return render(request, self.template_name, {'form':form})
 
+
+        
