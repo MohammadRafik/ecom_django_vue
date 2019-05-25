@@ -9,42 +9,70 @@
         <div class="col-md-8">
             <form onsubmit="" action="{%url 'accounts:register' %}" method="post">
                 {% csrf_token %}
-                <h2> Registration </h2>
-                <br>
-                {% comment %} you would use the line below if you dont have custom html template for all the inputs {% endcomment %}
-                {% comment %} {{ form }} {% endcomment %}
-                <div class="form-group row">
-                    <label for="full_name" class="col-md-4 col-form-label text-md-right">Full Name</label>
-                    <div class="col-md-6">
-                        <input type="text" id="username" class="form-control" name="username" >
+                <div class="card">
+                <div class="card-header">
+                    <h2> Registration </h2>
+                </div>
+                <div class="card-body">
+                    <br>
+                    {% comment %} you would use the line below if you dont have custom html template for all the inputs {% endcomment %}
+                    {% comment %} {{ form }} {% endcomment %}
+                    <div class="form-group row">
+                        <label for="full_name" class="col-md-4 col-form-label text-md-right">Full Name</label>
+                        <div class="col-md-6">
+                            <input name="{{ form.username.name }}" type="text" class="form-control {% if form.username.errors %}is-invalid{% endif %}" placeholder="username" required="" value="{{ form.username.value|default:'' }}" />
+                            {% if form.username.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.username.errors|first|safe }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                        <div class="col-md-6">
+                            <input name="{{ form.email.name }}" type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" placeholder="Email" required="" value="{{ form.email.value|default:'' }}" />
+                            {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.email.errors|first|safe }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                        <div class="col-md-6">
+                            <input name="{{ form.password1.name }}" type="password" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" placeholder="password" required="" value="{{ form.password1.value|default:'' }}" />
+                            {% if form.password1.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password1.errors|first|safe }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="repeat-password" class="col-md-4 col-form-label text-md-right">Repeat-Password</label>
+                        <div class="col-md-6">
+                            <input name="{{ form.password2.name }}" type="password" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" placeholder="repeat password" required="" value="{{ form.password2.value|default:'' }}" />
+                            {% if form.password2.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password2.errors|first|safe }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            Register
+                        </button>
                     </div>
                 </div>
-
-                <div class="form-group row">
-                    <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                    <div class="col-md-6">
-                        <input type="text" id="email" class="form-control" name="email">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" name="password1">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="repeat-password" class="col-md-4 col-form-label text-md-right">Repeat-Password</label>
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" name="password2">
-                    </div>
-                </div>
-
-                <div class="col-md-6 offset-md-4">
-                    <button type="submit" class="btn btn-primary">
-                        Register
-                    </button>
                 </div>
             </form>
         </div>

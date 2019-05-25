@@ -10,6 +10,13 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2',)
+        widgets = {
+            'username': forms.TextInput(attrs=({'required': ''})),
+            'email': forms.EmailInput(attrs=({'required': ''})),
+            'password1':forms.PasswordInput(attrs={'required': ''}),
+            'password2':forms.PasswordInput(attrs={'required': ''}),
+
+        }
     
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
