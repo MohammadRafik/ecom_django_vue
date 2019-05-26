@@ -4,6 +4,10 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
 # Create your views here.
+def home(request):
+    return render(request, 'accounts/home.html')
+
+
 class Register(View):
     template_name = 'accounts/register.html'
     form_class = RegistrationForm
@@ -17,11 +21,12 @@ class Register(View):
         if form.is_valid():
             form.save()
             # logging the user in since hes registration is successful
-            user = authenticate(username=form.cleaned_data['username'], password =form.cleaned_data['password'])
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
             login(request, user)
-            return redirect('accounts')
+            return redirect('../accounts')
         else:
             return render(request, self.template_name, {'form':form})
+
 
 class Login(View):
     template_name = 'accounts/login.html'
@@ -46,8 +51,14 @@ class Login(View):
 
         if user is not None:
             login(request, user)
-            return redirect('accounts')
+            return redirect('../accounts')
         else:
             error = "Oops! something's wrong. Your username/email and password didnt match"
             return render(request, self.template_name,  {'error':error, 'form_username':username})
 
+
+class Logout(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect('../accounts')

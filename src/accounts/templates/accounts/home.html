@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+        Hello, you are logged in, this is the account home page
+        <form onsubmit="" action="{% url 'accounts:logout' %}" method="get">
+        {% csrf_token %}
+            <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary">
+                    Logout
+                </button>
+            </div>
+        </form>
+    {% else %}
+        You are not logged in
+    {% endif %}
+
+{% endblock content %}
