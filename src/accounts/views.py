@@ -50,3 +50,4 @@ class Login(View):
         else:
             error = "Oops! something's wrong. Your username/email and password didnt match"
             return render(request, self.template_name,  {'error':error, 'form_username':username})
+
