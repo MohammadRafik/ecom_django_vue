@@ -16,7 +16,9 @@ class Register(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            
+            # logging the user in since hes registration is successful
+            user = authenticate(username=form.cleaned_data['username'], password =form.cleaned_data['password'])
+            login(request, user)
             return redirect('accounts')
         else:
             return render(request, self.template_name, {'form':form})
