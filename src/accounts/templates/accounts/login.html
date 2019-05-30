@@ -2,8 +2,26 @@
 
 
 {% block content %}
-
-
+{% if request.user.is_authenticated %}
+<div class="form-group pt-5">
+    <div class="row justify-content-left ml-5">
+        <div class="alert alert-success" role="alert">
+            <p> Looks like you're already logged in as {{ request.user.username }}</p>
+            <p> click <a href="{% url 'mainapp:home' %}">here</a> to go back home</p>
+        </div>
+        <br>
+        <div class="container">
+            <p> if you would like to log in to a different account you must logout of this one first </p>
+            <form onsubmit="" action="{% url 'accounts:logout' %}" method="get">
+            {% csrf_token %}
+                    <button type="submit" class="btn btn-info">
+                        Logout
+                    </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
 <div class="form-group pt-5">
     <div class="row justify-content-left">
         <div class="col-md-8">
@@ -47,7 +65,7 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 
 
 {% endblock %}
