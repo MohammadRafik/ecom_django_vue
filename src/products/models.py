@@ -2,6 +2,21 @@ from django.db import models
 
 # Create your models here.
 
+class Supplier(models.Model):
+    company_name = models.CharField(max_length=40)
+    description = models.CharField(max_length=1600)
+    contact_email = models.CharField(max_length=100)
+    phone_number = models.IntegerField()
+    full_address = models.CharField(max_length=200)
+    updated_by = models.CharField(max_length=100)
+    updated_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.company_name
+
+
 class Category(models.Model):
     name = models.CharField(max_length=20, unique=True)
     slug = models.SlugField(max_length=20, unique=True)
@@ -77,9 +92,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=250)    
+    title = models.CharField(max_length=250)
     description = models.TextField(max_length=800, null=True, blank=True)
     catagory = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
+    product_supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, default='pepega')#################################################################
     current_price = models.DecimalField(max_digits=9,decimal_places=2)
     base_price = models.DecimalField(max_digits=9,decimal_places=2)
     cost = models.DecimalField(max_digits=9,decimal_places=2,default=0)
