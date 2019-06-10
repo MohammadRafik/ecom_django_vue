@@ -84,7 +84,7 @@ class Product(models.Model):
     title = models.CharField(max_length=250)    
     description = models.TextField(max_length=800, null=True, blank=True)
     catagory = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
-    pictuer = models.ForeignKey(ProductImages, on_delete=models.CASCADE)
+    pictuer = models.ForeignKey(ProductImages, on_delete=models.CASCADE)############################################
     current_price = models.DecimalField(max_digits=9,decimal_places=2)
     base_price = models.DecimalField(max_digits=9,decimal_places=2)
     cost = models.DecimalField(max_digits=9,decimal_places=2,default=0)
