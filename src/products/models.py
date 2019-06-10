@@ -26,6 +26,9 @@ class Category(models.Model):
         super(Category, self).__init__(*args, **kwargs)
         self.sub_categories_list = None
 
+    def __str__(self):
+        return self.name
+
     def get_all_sub_categories(self):
         """
         Returns all sub categories from children
@@ -72,19 +75,11 @@ class Category(models.Model):
 
         return categories
 
-class ProductImages(models.Model):
-    display_order = models.IntegerField(default=0)
-    image_url = models.ImageField(upload_to='images/products')
-    updated_by = models.CharField(max_length=100)
-    updated_on = models.DateTimeField(auto_now=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.CharField(max_length=100)
 
 class Product(models.Model):
     title = models.CharField(max_length=250)    
     description = models.TextField(max_length=800, null=True, blank=True)
     catagory = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
-    pictuer = models.ForeignKey(ProductImages, on_delete=models.CASCADE)############################################
     current_price = models.DecimalField(max_digits=9,decimal_places=2)
     base_price = models.DecimalField(max_digits=9,decimal_places=2)
     cost = models.DecimalField(max_digits=9,decimal_places=2,default=0)
@@ -98,4 +93,22 @@ class Product(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
+
+class ProductImage(models.Model):
+    display_order = models.IntegerField(default=0)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)############################################
+    image_url = models.ImageField(upload_to='images/products')
+    updated_by = models.CharField(max_length=100)
+    updated_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.product.title
+
+
 
