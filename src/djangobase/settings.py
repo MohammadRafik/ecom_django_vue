@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # custom
-    # 'mainapp.apps.MainappConfig',
     'accounts.apps.AccountsConfig',
     'products.apps.ProductsConfig',
     'pageloader.apps.PageloaderConfig',
