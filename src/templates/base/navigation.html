@@ -4,10 +4,38 @@
             Navigation
         </h5>
         <ul class="nav flex-column">
+            {% comment %} {{categories}} {% endcomment %}
             {% for item in categories %}
+                <dropdown :trigger="'hover'" :align="'right'">
+                <template slot="btn"><a href='#'>item.title</a></template>
+                <template slot="body">
+                    <ul>
+                    <li>Custom item</li>
+                    <li>
+                        <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+                        <template slot="btn">Sublist right</template>
+                        <template slot="body">
+                            Sublist content
+                            <ul>
+                            <li>Custom subitem</li>
+                            <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+                                <template slot="btn">Sublist right</template>
+                                <template slot="body">Sublist content</template>
+                            </dropdown>
+                            </ul>
+                        </template>
+                        </dropdown>
+                    </li>
+                    </ul>
+                </template>
+                </dropdown>
+
+
+
+
                 <li class="nav-item">
                     <a class="nav-link">
-                        {{item}}
+                        {{item}} created on {{item.created_on}}
                     </a>
                 </li>
             {% endfor %}
