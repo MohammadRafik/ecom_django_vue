@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Min
 
 # Create your models here.
 
@@ -19,7 +20,7 @@ class Supplier(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    slug = models.SlugField(max_length=20, unique=True)
+    slug = models.SlugField(max_length=20, unique=True)#maybe delete this 
     description = models.TextField(null=True, blank=True)
     image_url = models.ImageField(upload_to='images/categorys',null=True, blank=True)
     parent = models.ForeignKey('self', related_name='sub_categories', null=True, blank=True, on_delete=models.CASCADE)
@@ -44,51 +45,47 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def get_all_sub_categories(self):
-        """
-        Returns all sub categories from children
-        """
-        for sub_category in self.sub_categories_list:
-            yield sub_category
-            # Returns children of sub categories
-            for sub_category2 in sub_category.get_all_sub_categories():
-                yield sub_category2
-
-    def get_sub_categories(self, categories):
-        sub_categories = []
-        for sub_category in categories:
-            if sub_category.parent_id == self.id:
-                sub_category.parent = self
-                sub_categories.append(sub_category)
-
-        return sub_categories
+    @staticmethod
+    def has_sub_categories(category):
+        if category.sub_categories_list == None:
+            return False
+        else:
+            return True
 
     @classmethod
-    def get_category(cls, slug):
-        """
-        Returns category with sub categories
-        """
-        # Loads all categories along with sub categories list
-        categories = list(cls.get_categories())
-
-        for category in categories:
-            if category.slug == slug:
-                return category
+    def get_main_categories(cls):
+        val = cls.objects.aggregate(Min('display_order')) #this finds what the value is for the lowest display order
+        main_categories = val['display_order__min']
+        return cls.objects.filter(display_order= main_categories) #returns a queryset of the categories with the display order of main_categories
 
     @classmethod
-    def get_categories(cls):
-        """
-        Returns all categories active
-        """
-        categories = list(
-            cls.objects.filter(is_active=True).order_by('display_order'))
+    def get_all_sub_categories(cls):
+        return cls.objects.filter(parent=cls.parent)
 
-        for category in categories:
-            category.sub_categories_list = category.get_sub_categories(
-                categories)
-            category.sub_categories_count = len(category.sub_categories_list)
 
-        return categories
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class Product(models.Model):

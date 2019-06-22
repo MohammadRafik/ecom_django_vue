@@ -7,7 +7,7 @@
             {% comment %} {{categories}} {% endcomment %}
             {% for item in categories %}
                 <dropdown :trigger="'hover'" :align="'right'">
-                <template slot="btn"><a href='#'>item.title</a></template>
+                <template slot="btn"><a href='#'>{{sub_categories}}</a></template>
                 <template slot="body">
                     <ul>
                     <li>Custom item</li>
