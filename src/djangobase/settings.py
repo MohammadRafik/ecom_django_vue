@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'products.apps.ProductsConfig',
     'pageloader.apps.PageloaderConfig',
+    'tools.apps.ToolsConfig',
 
 
 
