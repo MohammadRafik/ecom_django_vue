@@ -19,6 +19,7 @@ class Supplier(models.Model):
         return self.company_name
 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=20, unique=True)
     slug = models.SlugField(max_length=20, unique=True)#maybe delete this 
@@ -44,8 +45,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
-
     @classmethod
     def get_all_categories(cls):
         return cls.objects.filter(is_active = True)
@@ -61,7 +60,6 @@ class Category(models.Model):
             single_category.sub_categories_list = sub_categories
         return all_categories
 
-
     @staticmethod
     def find_main_categories(categories):
         # find value of lowest display order
@@ -76,13 +74,18 @@ class Category(models.Model):
                 main_categories.append(category)
         return main_categories
 
-
-
-
-
-
-
-
+    @classmethod
+    def generate_navigation_code(cls, category,f):
+        string_category = str(category)
+        f.write( '''<dropdown :trigger="'hover'" :align="'right'">''')
+        f.write( '''<template slot="btn"><a href="#">'''+  string_category + '''</a></template>''' )
+        # f.write( '''<template slot="btn"><a href="#">category</a></template>''' )
+        f.write( '''<template slot="body">''' )
+        if category.sub_categories_list != None:
+            for child in category.sub_categories_list:
+                cls.generate_navigation_code(child,f)
+        f.write( '</template>' )
+        f.write( '</dropdown>' )
 
 class Product(models.Model):
     title = models.CharField(max_length=250)
@@ -105,6 +108,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
 
 
 class ProductImage(models.Model):
