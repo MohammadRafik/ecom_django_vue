@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Min
+from tools.data_structures import Tree
 
 # Create your models here.
 
@@ -35,8 +36,6 @@ class Category(models.Model):
 
     class Meta:
         ordering = ('display_order', 'id',)
-        verbose_name_plural = 'Categories'
-
 
     def __init__(self, *args, **kwargs):
         super(Category, self).__init__(*args, **kwargs)
@@ -45,40 +44,37 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
+
+    @classmethod
+    def get_all_categories(cls):
+        return cls.objects.filter(is_active = True)
+
+    @classmethod
+    def update_sub_category_lists(cls):
+        all_categories = cls.get_all_categories()
+        for single_category in all_categories:
+            sub_categories = []
+            for one_category in all_categories:
+                if one_category.parent_id == single_category.id:
+                    sub_categories.append(one_category)
+            single_category.sub_categories_list = sub_categories
+        return all_categories
+
+
     @staticmethod
-    def has_sub_categories(category):
-        if category.sub_categories_list == None:
-            return False
-        else:
-            return True
-
-    @classmethod
-    def get_main_categories(cls):
-        val = cls.objects.aggregate(Min('display_order')) #this finds what the value is for the lowest display order
-        main_categories = val['display_order__min']
-        return cls.objects.filter(display_order= main_categories) #returns a queryset of the categories with the display order of main_categories
-
-    @classmethod
-    def get_all_sub_categories(cls):
-        return cls.objects.filter(parent=cls.parent)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def find_main_categories(categories):
+        # find value of lowest display order
+        min_display_order = 324234
+        for category in categories:
+            if category.display_order < min_display_order:
+                min_display_order = category.display_order
+        # find and then return main categories
+        main_categories = []
+        for category in categories:
+            if category.display_order == min_display_order:
+                main_categories.append(category)
+        return main_categories
 
 
 

@@ -1,0 +1,47 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+        <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            Navigation
+        </h5>
+        <ul class="nav flex-column">
+            {% comment %} {{categories}} {% endcomment %}
+            {% for item in categories %}
+                <dropdown :trigger="'hover'" :align="'right'">
+                <template slot="btn"><a href="#">{{item}}</a></template>
+                <template slot="body">
+                    <ul>
+                    <li>Custom item</li>
+                    <li>
+                        <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+                        <template slot="btn">Sublist right</template>
+                        <template slot="body">
+                            Sublist content
+                            <ul>
+                            <li>Custom subitem</li>
+                            <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+                                <template slot="btn">Sublist right</template>
+                                <template slot="body">Sublist content</template>
+                            </dropdown>
+                            </ul>
+                        </template>
+                        </dropdown>
+                    </li>
+                    </ul>
+                </template>
+                </dropdown>
+
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link">
+                        {{item}} created on {{item.created_on}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <ul class="nav flex-column mb-2">
+                            hi xd
+        </ul>
+    </div>
+</nav>
