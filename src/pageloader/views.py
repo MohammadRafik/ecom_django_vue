@@ -25,7 +25,11 @@ class BaseLoader(View):
         self.all_categories = Category.update_sub_category_lists()
         self.categories = Category.find_main_categories(self.all_categories)
         path = os.getcwd() + '\src\pageloader\\navigationString.txt'
-        f= open(path,"w+")
+        try:
+            f= open(path,"w+")
+        except:
+            path = os.getcwd() + '\pageloader\\navigationString.txt'
+            f= open(path,"w+")
         for cat in self.categories:
             self.tree_traversal(cat, f)
         f.close()
