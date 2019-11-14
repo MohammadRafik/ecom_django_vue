@@ -12,6 +12,8 @@ import Demo from "./components/Demo.vue";
 
 const app = new Vue({
     el: '#app',
+    data: data,
+    delimiters: ["[[","]]"],
     components: {
         Demo,
         Dropdown

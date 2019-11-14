@@ -78,7 +78,7 @@ class Category(models.Model):
     def generate_navigation_code(cls, category,f):
         string_category = str(category)
         f.write( '''<dropdown :trigger="'hover'" :align="'right'">''')
-        f.write( '''<template slot="btn"><a href="#">'''+  string_category + '''</a></template>''' )
+        f.write( '''<template slot="btn"><a href="#" >'''+  string_category + '''</a></template>''' )
         # f.write( '''<template slot="btn"><a href="#">category</a></template>''' )
         f.write( '''<template slot="body">''' )
         if category.sub_categories_list != None:
