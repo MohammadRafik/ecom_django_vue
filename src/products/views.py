@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.views import View
 from products.models import Category
 import os
+from rest_framework import viewsets
+from .serializers import CategorySerializer
+
 
 # this class is used to find all catagorys in the database bring them
 # in, and check if a catagory is selected and load things accordingly
@@ -32,3 +35,9 @@ class BaseLoader(View):
     def get(self, request):
     # this should be to load the homepage, so give featured products and catalog data
         return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string})
+
+
+#serilazerationzzzz
+class CategoryView(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
