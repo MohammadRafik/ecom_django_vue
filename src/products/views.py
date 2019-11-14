@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views import View
-from products.models import Category
+from products.models import Category, Supplier, Product, ProductImage
 import os
 from rest_framework import viewsets
-from .serializers import CategorySerializer
+from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
 
 
 # this class is used to find all catagorys in the database bring them
@@ -38,6 +38,18 @@ class BaseLoader(View):
 
 
 #serilazerationzzzz
+class SupplierView(viewsets.ModelViewSet):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
+
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class ProductView(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductImageView(viewsets.ModelViewSet):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
