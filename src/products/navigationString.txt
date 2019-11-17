@@ -1,1 +1,0 @@
-<dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" >catalog</a></template><template slot="body"></template></dropdown>
