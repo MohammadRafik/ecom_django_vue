@@ -112,7 +112,6 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    display_order = models.IntegerField(default=0)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)############################################
     image_url = models.ImageField(upload_to='static/images/products')
     updated_by = models.CharField(max_length=100)

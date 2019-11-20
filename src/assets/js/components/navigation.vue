@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a v-on:click="fetch_categories">Click me!</a>
+        <a v-on:click="fetch_categories">click this to get navigation from the api</a>
     </div>
 </template>
 
