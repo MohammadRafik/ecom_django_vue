@@ -20,5 +20,5 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 class ProductImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ( 'id', 'display_order', 'product_id', 'image_url',  'updated_by', 'updated_on', 'created_on', 'created_by')
+        fields = ( 'id', 'product_id', 'image_url',  'updated_by', 'updated_on', 'created_on', 'created_by')
 
