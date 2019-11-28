@@ -12,12 +12,14 @@ import Dropdown from 'bp-vuejs-dropdown';
 // my custom components
 import Demo from "./components/Demo.vue";
 import Navigation from "./components/navigation.vue"
+import Tools from "./helpers/tools.vue"
 
 const app = new Vue({
     el: '#app',
     // data: data,
     delimiters: ["[[","]]"],
     components: {
+        Tools,
         Demo,
         Dropdown,
         Navigation

@@ -1,8 +1,10 @@
 {% extends "base/base.html" %}
 {% block content %}
 
-
-    {% include 'base/navigation.html' %}
-
+                {% comment %} {{categories}} {% endcomment %}
+                <navigation></navigation>
+                {% autoescape off %}
+                    {{massive_string}}
+                {% endautoescape %}
 
 {% endblock content %}

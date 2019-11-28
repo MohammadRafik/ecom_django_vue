@@ -13,4 +13,5 @@ urlpatterns = [
     path('', views.BaseLoader.as_view(), name='home'),
     path('api/', include(router.urls)),
 
+
 ]

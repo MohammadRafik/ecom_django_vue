@@ -22,10 +22,11 @@
     <div id="app">
 
         {% include 'base/header.html' %}
-        <navigation></navigation>
         <div class="container">
+        <tools>
             {% block content %}
             {% endblock %}
+        <tools>
         </div>
         {% include 'base/footer.html' %}
     </div>

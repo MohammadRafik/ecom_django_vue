@@ -73,19 +73,7 @@ class Category(models.Model):
             if category.display_order == min_display_order:
                 main_categories.append(category)
         return main_categories
-
-    @classmethod
-    def generate_navigation_code(cls, category,f):
-        string_category = str(category)
-        f.write( '''<dropdown :trigger="'hover'" :align="'right'">''')
-        f.write( '''<template slot="btn"><a href="#" >'''+  string_category + '''</a></template>''' )
-        # f.write( '''<template slot="btn"><a href="#">category</a></template>''' )
-        f.write( '''<template slot="body">''' )
-        if category.sub_categories_list != None:
-            for child in category.sub_categories_list:
-                cls.generate_navigation_code(child,f)
-        f.write( '</template>' )
-        f.write( '</dropdown>' )
+    
 
 class Product(models.Model):
     title = models.CharField(max_length=250)

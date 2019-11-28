@@ -12,7 +12,6 @@ export default {
         return {
 
         }
-
     },
     methods:{
         fetch_categories: function(){
@@ -29,6 +28,7 @@ export default {
                     //this always runs
                 })
         },
+        
         
 
     }

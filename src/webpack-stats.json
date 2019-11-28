@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"app.js","path":"C:\\Users\\aklsd\\Documents\\projects\\ecom_django_vue\\src\\assets\\bundles\\app.js"}]},"error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve 'axiosee' in 'C:\\Users\\aklsd\\Documents\\projects\\ecom_django_vue\\src\\assets\\js'"}
+{"status":"done","chunks":{"main":[{"name":"app.js","path":"C:\\Users\\aklsd\\Documents\\projects\\ecom_django_vue\\src\\assets\\bundles\\app.js"}]}}
