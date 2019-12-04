@@ -60,6 +60,7 @@ class Category(models.Model):
             single_category.sub_categories_list = sub_categories
         return all_categories
 
+
     @staticmethod
     def find_main_categories(categories):
         # find value of lowest display order
@@ -73,12 +74,34 @@ class Category(models.Model):
             if category.display_order == min_display_order:
                 main_categories.append(category)
         return main_categories
+
+    # maybe refactor this abomination later?
+    def get_all_sub_categories(self):
+        all_categories = self.update_sub_category_lists()
+        for cat in all_categories:
+            if cat.id == self.id
+                category = cat
+                break
+
+        def traverse_tree(category):
+            if  category.sub_categories_list != None:
+                for sub_category in category.sub_categories_list:
+                    traverse_tree(sub_category)
+                    yield sub_category
+        generator_with_sub_categories = traverse_tree(category)
+
+        list_of_all_sub_categories = []
+        for x in generator_with_sub_categories:
+            list_of_all_sub_categories.append(x)
+        return list_of_all_sub_categories
+
+
     
 
 class Product(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField(max_length=800, null=True, blank=True)
-    catagory = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
     product_supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, default='pepega')#################################################################
     current_price = models.DecimalField(max_digits=9,decimal_places=2)
     base_price = models.DecimalField(max_digits=9,decimal_places=2)
@@ -96,6 +119,32 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+    # def return_all_child_categories(self):
+    #     return self.category.get_all_sub_categories()
+
+    @classmethod
+    def get_all_products(cls):
+        return cls.objects.all()
+
+    @classmethod
+    def get_products_by_category_id(cls, category_id):
+        cls.objects.filter(category_id = category_id)
+
+    @classmethod
+    def get_products_from_list_of_categories(cls, list_of_category_and_all_its_sub_categories):
+        products = []
+        for category in list_of_category_and_all_its_sub_categories:
+            products += list(cls.objects.filter(categoy = category))
+
+
+
+
+
+
+
+
 
 
 
