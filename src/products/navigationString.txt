@@ -1,12 +1,14 @@
- 
+
                         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                         <div class="sidebar-sticky">
-                        <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        Navigation
-                        </h5>
                         <ul class="nav flex-column">
-                    <dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" v-on:click="update_category(' electronics ')">electronics</a></template><template slot="body"><dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" v-on:click="update_category(' keyboards ')">keyboards</a></template><template slot="body"><li><a href="#">old keyboards</a></li> </template></dropdown></template></dropdown> 
+                        <dropdown :trigger="'hover'" :align="'right'">
+                        <template slot="btn"><a href="#" >Catalog</a></template>
+                        <template slot="body">
+                    <dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" v-on:click="update_category(' electronics ')">electronics</a></template><template slot="body"><dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" v-on:click="update_category(' keyboards ')">keyboards</a></template><template slot="body"><li><a href="#" v-on:click="update_category(' old keyboards ')" >old keyboards</a></li> </template></dropdown></template></dropdown>
                         </ul>
                         </div>
-                        </nav> 
+                        </nav>
+                        </template>
+                        </dropdown>
                     

@@ -12,16 +12,24 @@ import Dropdown from 'bp-vuejs-dropdown';
 // my custom components
 import Demo from "./components/Demo.vue";
 import Navigation from "./components/navigation.vue"
-import Tools from "./helpers/tools.vue"
+
+
+// mixins
+import {base_global} from "./mixins/base_global.js"
 
 const app = new Vue({
     el: '#app',
-    // data: data,
+    data: function(){
+        return {
+            xd: '123',
+        }
+    },
     delimiters: ["[[","]]"],
     components: {
-        Tools,
         Demo,
         Dropdown,
         Navigation
-    }
+    },
+    mixins: [base_global]
+    
 });

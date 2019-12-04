@@ -7,7 +7,7 @@
 <script>
 export default {
     name: 'tools',
-    data () {
+    data() {
         return {
             filters:{
                 category: '',

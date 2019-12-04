@@ -4,7 +4,7 @@ from products.models import Category, Supplier, Product, ProductImage
 import os
 from rest_framework import viewsets
 from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
-
+from django.http import HttpRequest, HttpResponse
 
 # this class is used to find all catagorys in the database bring them
 # in, and check if a catagory is selected and load things accordingly
@@ -24,13 +24,13 @@ class BaseLoader(View):
             f.write( '</template>' )
             f.write( '</dropdown>' )
         else:
-            f.write( '''<li><a href="#">''' + string_category + '''</a></li> ''')
+            f.write( '''<li><a href="#" v-on:click="update_category(' '''+  string_category + ''' ')" >''' + string_category + '''</a></li> ''')
 
     # def __init__(self):
 
 
 
-    def get(self, request):
+    def get(self, request, filter = ''):
         # generate html code to list all categories
         self.all_categories = Category.update_sub_category_lists()
         self.categories = Category.find_main_categories(self.all_categories)
@@ -40,10 +40,8 @@ class BaseLoader(View):
         except:
             path = os.getcwd() + '\products\\navigationString.txt'
             f= open(path,"w+")
-            
-        if 'category' not in request.session:
-        # if True:
-        # if False:
+        # here we check if a category has been selected, if it has we display the catalog differently
+        if filter == '':
             f.write(''' 
                         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                         <div class="sidebar-sticky">
@@ -83,8 +81,16 @@ class BaseLoader(View):
         with open(path, 'r') as file:
             self.massive_string = file.read().replace('\n', '')
             f.close()
-    # this should be to load the homepage, so give featured products and catalog data
+
+        # now we use the filter to load the products accordingly!
+
+
+
+
+
+        # this should be to load the homepage, so give featured products and catalog data
         return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string})
+
 
 
 #these are for setting up the api for all the models using the django rest framework
@@ -104,3 +110,22 @@ class ProductImageView(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
 
+
+
+
+
+# simple session read write api to be used with axios
+class SessionAccess(View):
+    def get(self, request):
+        index = request.GET['index']
+        if index in request.session:
+            return HttpResponse(request.session[index])
+        else:
+            return HttpResponse(False)
+
+
+    def post(self, request):
+        index = request.POST['index']
+        value = request.POST['value']
+        request.session[index] = value
+        return HttpResponse(request.session[index])
