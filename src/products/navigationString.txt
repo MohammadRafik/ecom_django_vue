@@ -5,7 +5,7 @@
                         <dropdown :trigger="'hover'" :align="'right'">
                         <template slot="btn"><a href="#" >Catalog</a></template>
                         <template slot="body">
-                    <dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" v-on:click="update_category(' electronics ')">electronics</a></template><template slot="body"><dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="#" v-on:click="update_category(' keyboards ')">keyboards</a></template><template slot="body"><li><a href="#" v-on:click="update_category(' old keyboards ')" >old keyboards</a></li> </template></dropdown></template></dropdown>
+                    <dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' electronics ')">{{ electronics }}electronics</a></template><template slot="body"><dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' keyboards ')">{{ keyboards }}keyboards</a></template><template slot="body"><li><a href="#" v-on:click="update_category(' old keyboards ')" >old keyboards</a></li> </template></dropdown></template></dropdown>
                         </ul>
                         </div>
                         </nav>

@@ -79,7 +79,7 @@ class Category(models.Model):
     def get_all_sub_categories(self):
         all_categories = self.update_sub_category_lists()
         for cat in all_categories:
-            if cat.id == self.id
+            if cat.id == self.id:
                 category = cat
                 break
 
@@ -130,13 +130,16 @@ class Product(models.Model):
 
     @classmethod
     def get_products_by_category_id(cls, category_id):
-        cls.objects.filter(category_id = category_id)
+        return cls.objects.filter(category_id = category_id)
+
 
     @classmethod
     def get_products_from_list_of_categories(cls, list_of_category_and_all_its_sub_categories):
         products = []
-        for category in list_of_category_and_all_its_sub_categories:
-            products += list(cls.objects.filter(categoy = category))
+        for single_category in list_of_category_and_all_its_sub_categories:
+            product = list(cls.objects.filter(category = single_category))
+            products = products + product
+        return products
 
 
 

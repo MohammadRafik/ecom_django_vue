@@ -3,6 +3,9 @@
 
                 {% comment %} {{categories}} {% endcomment %}
                 <navigation></navigation>
+                {% for filtervar in filter_list %}
+                    <a href="{% url 'products:filter' filtervar %}"{{filtervar}}>xdsafdasdfasdfasdffads</a>
+                {% endfor %}
                 {% autoescape off %}
                     {{massive_string}}
                 {% endautoescape %}

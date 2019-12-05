@@ -15,7 +15,7 @@ class BaseLoader(View):
         string_category = str(category)
         if category.sub_categories_list != []:
             f.write( '''<dropdown :trigger="'hover'" :align="'right'">''')
-            f.write( '''<template slot="btn"><a href="#" v-on:click="update_category(' '''+  string_category + ''' ')">'''+  string_category + '''</a></template>''' )
+            f.write( '''<template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' '''+  string_category + ''' ')">{{ '''+  string_category + ''' }}'''+  string_category + '''</a></template>''' )
             # f.write( '''<template slot="btn"><a href="#">category</a></template>''' )
             f.write( '''<template slot="body">''' )
             if category.sub_categories_list != []:
@@ -27,6 +27,7 @@ class BaseLoader(View):
             f.write( '''<li><a href="#" v-on:click="update_category(' '''+  string_category + ''' ')" >''' + string_category + '''</a></li> ''')
 
     # def __init__(self):
+
 
 
 
@@ -83,13 +84,20 @@ class BaseLoader(View):
             f.close()
 
         # now we use the filter to load the products accordingly!
+        if filter != '':
+            self.category_from_filter = list(Category.objects.filter(name = filter))
+            self.list_of_all_categories_from_filter = Category.get_all_sub_categories(self.category_from_filter[0])
+            self.list_of_all_categories_from_filter.append(self.category_from_filter[0])
+            self.all_products = Product.get_products_from_list_of_categories(self.list_of_all_categories_from_filter)
 
+        else:
+            self.all_products = Product.get_all_products()
 
 
 
 
         # this should be to load the homepage, so give featured products and catalog data
-        return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string})
+        return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string, 'products':self.all_products})
 
 
 
