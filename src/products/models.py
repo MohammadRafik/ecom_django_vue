@@ -162,5 +162,6 @@ class ProductImage(models.Model):
     def __str__(self):
         return self.product.title
 
-
-
+    @classmethod
+    def find_productimage(cls, product_id):
+        return cls.objects.filter(product_id = product_id)
