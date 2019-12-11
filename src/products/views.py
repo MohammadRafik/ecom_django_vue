@@ -30,7 +30,7 @@ class BaseLoader(View):
 
 
 
-
+    # i think filter can be accessed from request.filter so i dont think i need to pass it in like this..?
     def get(self, request, filter = ''):
         # generate html code to list all categories
         self.all_categories = Category.update_sub_category_lists()
@@ -64,7 +64,7 @@ class BaseLoader(View):
                         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                         <div class="sidebar-sticky">
                         <ul class="nav flex-column">
-                        <dropdown :trigger="'hover'" :align="'right'">
+                        <dropdown :trigger="'hover'" :align="'down'">
                         <template slot="btn"><a href="#" >Catalog</a></template>
                         <template slot="body">
                     ''')
@@ -93,11 +93,15 @@ class BaseLoader(View):
         else:
             self.all_products = Product.get_all_products()
 
-
+        #now we find all the images we need for each product
+        self.all_product_images = []
+        for product in self.all_products:
+            img = list(ProductImage.find_productimage(product.id))
+            self.all_product_images += img
 
 
         # this should be to load the homepage, so give featured products and catalog data
-        return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string, 'products':self.all_products})
+        return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string, 'products':self.all_products, 'product_images':self.all_product_images})
 
 
 

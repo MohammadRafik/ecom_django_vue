@@ -1,13 +1,25 @@
 {% extends "base/base.html" %}
 {% block content %}
 
-                {% comment %} {{categories}} {% endcomment %}
-                <navigation></navigation>
-                {% for filtervar in filter_list %}
-                    <a href="{% url 'products:filter' filtervar %}"{{filtervar}}>xdsafdasdfasdfasdffads</a>
+
+
+                {% for filtervar in request.filter %}
+                    <a href="{% url 'products:filter' filtervar %}"{{filtervar}}>keyboards</a>
                 {% endfor %}
                 {% autoescape off %}
                     {{massive_string}}
                 {% endautoescape %}
+
+                {% for product in products %}
+                    <h5> {{product}} </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <img src="{{product_image.image_url}}">
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+
+                {% comment %} products {% endcomment %}
 
 {% endblock content %}

@@ -154,6 +154,7 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)############################################
     image_url = models.ImageField(upload_to='static/images/products')
+    main_picture = models.BooleanField(default=False)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
