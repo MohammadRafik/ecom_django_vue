@@ -22,14 +22,14 @@ class Supplier(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    slug = models.SlugField(max_length=20, unique=True)#maybe delete this 
+    slug = models.SlugField(max_length=20, unique=True)#delete this 
     description = models.TextField(null=True, blank=True)
-    image_url = models.ImageField(upload_to='static/images/categorys',null=True, blank=True)
+    image_url = models.ImageField(upload_to='images/categories',null=True, blank=True)
     parent = models.ForeignKey('self', related_name='sub_categories', null=True, blank=True, on_delete=models.CASCADE)
     tags = models.CharField(max_length=100, null=True, blank=True, help_text='SEO keywords')
     display_order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
-    is_expended = models.BooleanField(default=False, help_text='Catergory will always shown expended')
+    is_expended = models.BooleanField(default=False, help_text='Catergory will always shown expended') #delete this
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -153,7 +153,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)############################################
-    image_url = models.ImageField(upload_to='static/images/products')
+    image_url = models.ImageField(upload_to='images/products')
     main_picture = models.BooleanField(default=False)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)

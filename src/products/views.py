@@ -13,9 +13,10 @@ class BaseLoader(View):
     @classmethod
     def generate_navigation_code(cls, category,f):
         string_category = str(category)
+
         if category.sub_categories_list != []:
             f.write( '''<dropdown :trigger="'hover'" :align="'right'">''')
-            f.write( '''<template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' '''+  string_category + ''' ')">{{ '''+  string_category + ''' }}'''+  string_category + '''</a></template>''' )
+            f.write( '''<template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' '''+  string_category + ''' ')">{{ '''+  string_category + '''|safe|escape }}'''+  string_category + '''</a></template>''' )
             # f.write( '''<template slot="btn"><a href="#">category</a></template>''' )
             f.write( '''<template slot="body">''' )
             if category.sub_categories_list != []:
@@ -27,6 +28,10 @@ class BaseLoader(View):
             f.write( '''<li><a href="#" v-on:click="update_category(' '''+  string_category + ''' ')" >''' + string_category + '''</a></li> ''')
 
     # def __init__(self):
+
+
+
+
 
 
 
@@ -101,7 +106,32 @@ class BaseLoader(View):
 
 
         # this should be to load the homepage, so give featured products and catalog data
-        return render(request, 'products/home.html', {'categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string, 'products':self.all_products, 'product_images':self.all_product_images})
+        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'massive_string':self.massive_string, 'products':self.all_products, 'product_images':self.all_product_images, 'empty_list':[]})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
