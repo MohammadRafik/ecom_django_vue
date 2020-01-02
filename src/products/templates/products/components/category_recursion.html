@@ -8,5 +8,8 @@
     </template>
     </dropdown>
 {% else %}
-    <li><a href="{% url 'products:filter' category %}" >{{category}}</a></li>
+    <a href="{% url 'products:filter' category %}" >{{category}}</a>
 {% endif %}
+
+
+
