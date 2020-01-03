@@ -12,10 +12,17 @@ class CartItem(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
 
-    def find_cost(self):
-        self.current_price = self.product.current_price
+    def find_total_cost(self):
+        current_price = self.product.current_price
         tax = 1.12
-        self.total_cost = self.quantity * self.current_price * tax
+        self.total_cost = self.quantity * current_price * tax
+        return self.total_cost
+
+    def find_item_price(self):
+        return self.product.current_price
+
+    def update_quantity(self, product_id, quantity):
+        self.filter(product_id=product_id).update(quantity=quantity)
 
 
 
