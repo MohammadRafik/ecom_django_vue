@@ -5,7 +5,7 @@ from products.models import Product
 # Create your models here.
 #add functionality to be able to remove a cartItem, or change its quantity
 class CartItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
