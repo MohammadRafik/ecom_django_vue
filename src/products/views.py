@@ -111,6 +111,10 @@ class BaseLoader(View):
 
 
 
+def product_page(request, product_id):
+    #find product and give it to template
+
+    return render(request, 'products/product.html', {})
 
 
 
