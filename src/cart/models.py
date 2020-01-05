@@ -4,27 +4,6 @@ from products.models import Product
 
 # Create your models here.
 #add functionality to be able to remove a cartItem, or change its quantity
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, related_name='cart_item', on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    updated_by = models.CharField(max_length=100)
-    updated_on = models.DateTimeField(auto_now=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.CharField(max_length=100)
-
-    def find_total_cost(self):
-        current_price = self.product.current_price
-        tax = 1.12
-        self.total_cost = self.quantity * current_price * tax
-        return self.total_cost
-
-    def find_item_price(self):
-        return self.product.current_price
-
-    def update_quantity(self, quantity):
-        self.update(quantity=quantity)
-
 
 class Cart(models.Model):
 
@@ -53,3 +32,25 @@ class Cart(models.Model):
             the_cart_item = self.cart_item(product_id=product_id,quantity=quantity,updated_by=str(user),created_by=str(user))
             the_cart_item.save()
             return the_cart_item
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name='cart_item', on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    updated_by = models.CharField(max_length=100)
+    updated_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(max_length=100)
+
+    def find_total_cost(self):
+        current_price = self.product.current_price
+        tax = 1.12
+        self.total_cost = self.quantity * current_price * tax
+        return self.total_cost
+
+    def find_item_price(self):
+        return self.product.current_price
+
+    def update_quantity(self, quantity):
+        self.update(quantity=quantity)
