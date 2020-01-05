@@ -5,7 +5,7 @@ and make sure u have node.js with npm then install req file with pip then the no
 
 
 
-webpack commands:
+webpack commands (windows):
 1. to update app.js just once: .\node_modules\.bin\webpack --config webpack.config.js
 
 2. to update app.js every time a change is saved on the frontend files: .\node_modules\.bin\webpack --config webpack.config.js --watch
