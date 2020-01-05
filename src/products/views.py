@@ -101,7 +101,7 @@ class BaseLoader(View):
         #now we find all the images we need for each product
         self.all_product_images = []
         for product in self.all_products:
-            img = list(ProductImage.find_productimage(product.id))
+            img = list(ProductImage.find_all_product_images(product.id))
             self.all_product_images += img
 
 
@@ -113,8 +113,13 @@ class BaseLoader(View):
 
 def product_page(request, product_id):
     #find product and give it to template
+    main_product = list(Product.objects.filter(id = product_id))
+    main_product = main_product[0]
+    main_image = list(ProductImage.find_main_product_image(product_id))
+    main_image = main_image[0]
+    other_images = ProductImage.find_product_images(product_id)
 
-    return render(request, 'products/product.html', {})
+    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images})
 
 
 

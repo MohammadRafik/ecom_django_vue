@@ -1,7 +1,20 @@
 {% extends "base/base.html" %}
 {% block content %}
 
-<h1>this is where each product will be showcased with all its details, and have buttons for adding it to cart and what not</h1>
+<h1>{{product}}</h1>
+<img src="/media/{{main_image.image_url}}" width='200'>
 
+
+{% comment %} put details here, desciprion, cost etc {% endcomment %}
+<p>{{product.description}}</p>
+<strong>CDN${{product.current_price}}</strong>
+
+
+
+{% comment %} rest of the photos {% endcomment %}
+<p>more images</p>
+{%for image in other_images%}
+    <img src="/media/{{image.image_url}}" width='200'>
+{%endfor%}
 
 {% endblock content %}
