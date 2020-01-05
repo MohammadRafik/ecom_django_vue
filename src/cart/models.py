@@ -13,7 +13,7 @@ class Cart(models.Model):
     created_by = models.CharField(max_length=100)
 
     @classmethod
-    def get_cart(cls, cart_id='None'):
+    def get_cart(cls, cart_id=None):
         if cart_id:
             return cls.objects.filter(cart_id = cart_id)
         else:
