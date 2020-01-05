@@ -166,3 +166,7 @@ class ProductImage(models.Model):
     @classmethod
     def find_productimage(cls, product_id):
         return cls.objects.filter(product_id = product_id)
+
+    @classmethod
+    def find_main_product_image(cls, product_id):
+        return cls.objects.filter(product_id = product_id, main_picture = True)
