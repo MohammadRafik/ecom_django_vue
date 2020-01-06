@@ -4,27 +4,22 @@
 
                 
 
-{% comment %} here we load the categories {% endcomment %}
-                {% for category in main_categories %}
-                    {% include "products/components/category_recursion.html" %}
-                {% endfor %}
-
+                {% comment %} here we load the categories {% endcomment %}
+                {%include "products/components/categories.html" %}
 
 
                 {% for product in products %}
-                    <a href="{% url 'products:product_page' product.id %}" {{product.id}}>
+                    <a href="{% url 'products:product_page' product.id %}" >
                         <h5> {{product}} </h5>
                     </a>
                     {% for product_image in product_images %}
                         {% if product_image.product == product and product_image.main_picture == True%}
-                            <a href="{% url 'products:product_page' product.id %}" {{product.id}}>
+                            <a href="{% url 'products:product_page' product.id %}">
                                 <img src="/media/{{product_image.image_url}}" width='200'>
                             </a>
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
 
-
-                {% comment %} products {% endcomment %}
 
 {% endblock content %}
