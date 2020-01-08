@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand h2" style="margin-right:2rem" href="#">Electrone</a>
+        <a class="navbar-brand h2" style="margin-right:2rem" href="{% url 'products:home' %}">Electrone</a>
                 
         <div class="navbar-nav mr-auto">
             <form class="form-inline mr-auto">
@@ -12,13 +12,13 @@
 
         <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'products:home' %}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><img src="{% static 'base/imgs/shopping-cart.png' %}" width="30px"></a>
+            <a class="nav-link" href="{% url 'cart:cartpageloader' %}"><img src="{% static 'base/imgs/shopping-cart.png' %}" width="30px"></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><img src="{% static 'base/imgs/user.png' %}" width="30px"></a>
+            <a class="nav-link" href="{% url 'accounts:login' %}"><img src="{% static 'base/imgs/user.png' %}" width="30px"></a>
         </li>
         {% comment %} <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
