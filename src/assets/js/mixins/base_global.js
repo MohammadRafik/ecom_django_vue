@@ -33,7 +33,7 @@ export const base_global = {
         },
 
         update_cart: function(){
-            axios.post('/?????????????')
+            axios.post('/api')
             .then(function(response){
 
             })
