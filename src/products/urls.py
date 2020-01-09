@@ -12,6 +12,7 @@ app_name = 'products'
 urlpatterns = [
     path('', views.BaseLoader.as_view(), name='home'),
     path('category/search/<filter>/', views.BaseLoader.as_view(), name='filter'),
+    path('category/search/$', views.product_search, name='product_search'),
     path('api/', include(router.urls)),
     path('api/session/', views.SessionAccess.as_view(), name='xd123'),
     path('product/<product_id>/', views.product_page, name='product_page'),

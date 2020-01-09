@@ -1,0 +1,12 @@
+ 
+                        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                        <div class="sidebar-sticky">
+                        <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        Navigation
+                        </h5>
+                        <ul class="nav flex-column">
+                    <dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' electronics ')">{{ electronics|safe|escape }}electronics</a></template><template slot="body"><dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' keyboards ')">{{ keyboards|safe|escape }}keyboards</a></template><template slot="body"><li><a href="#" v-on:click="update_category(' old keyboards ')" >old keyboards</a></li> </template></dropdown><dropdown :trigger="'hover'" :align="'right'"><template slot="btn"><a href="{% url 'products:filter' %}" v-on:click="update_category(' mouse ')">{{ mouse|safe|escape }}mouse</a></template><template slot="body"><li><a href="#" v-on:click="update_category(' Gaming Mouse ')" >Gaming Mouse</a></li> </template></dropdown></template></dropdown><li><a href="#" v-on:click="update_category(' non-electronics ')" >non-electronics</a></li>  
+                        </ul>
+                        </div>
+                        </nav> 
+                    
