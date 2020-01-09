@@ -30,6 +30,19 @@ export const base_global = {
     methods: {
         update_category: function(category){
             this.category = category
+        },
+
+        update_cart: function(){
+            axios.post('/?????????????')
+            .then(function(response){
+
+            })
+            .catch(function (error){
+
+            })
+            .finally(function(){
+                
+            })
         }
     }
   }
