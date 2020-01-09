@@ -15,7 +15,7 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
-        fields = ( 'id', 'title', 'description', 'catagory_id', 'product_supplier_id', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
+        fields = ( 'id', 'title', 'description', 'category_id', 'product_supplier_id', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
 
 class ProductImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
