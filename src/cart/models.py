@@ -15,7 +15,7 @@ class Cart(models.Model):
     @classmethod
     def get_cart(cls, cart_id=None):
         if cart_id:
-            return cls.objects.filter(cart_id = cart_id)
+            return cls.objects.filter(id = cart_id)
         else:
             cart = cls()
             cart.save()
