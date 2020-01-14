@@ -8,17 +8,21 @@ class SupplierSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Category
-        fields = ( 'id', 'name', 'slug', 'description', 'image_url', 'parent_id', 'tags', 'display_order', 'is_active', 'updated_by', 'updated_on', 'created_on', 'created_by' )
+        fields = ( 'id', 'url', 'name', 'slug', 'description', 'image_url', 'parent', 'tags', 'display_order', 'is_active', 'updated_by', 'updated_on', 'created_on', 'created_by' )
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
+
+
     class Meta:
         model = Product
-        fields = ( 'id', 'title', 'description', 'category_id', 'product_supplier_id', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
+        fields = ( 'id', 'title', 'description', 'category', 'product_supplier', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
 
 class ProductImageSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = ProductImage
-        fields = ( 'id', 'product_id', 'image_url',  'updated_by', 'updated_on', 'created_on', 'created_by')
+        fields = ( 'id', 'product', 'image_url', 'main_picture',  'updated_by', 'updated_on', 'created_on', 'created_by')
 

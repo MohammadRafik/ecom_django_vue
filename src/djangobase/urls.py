@@ -17,10 +17,27 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+from products import views as productviews
+
+
+router = routers.DefaultRouter()
+router.register('categories', productviews.CategoryView)
+router.register('suppliers', productviews.SupplierView)
+router.register('products', productviews.ProductView)
+router.register('productimages', productviews.ProductImageView)
+
+#including the models of a different app here to add them to the api easily
+from cart import views as cartviews
+router.register('cart', cartviews.CartViewSet)
+router.register('cartitem', cartviews.CartItemViewSet)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('products.urls')),
     path('accounts/', include('accounts.urls')),
-    path('cart/', include('cart.urls'))
+    path('cart/', include('cart.urls')),
+    path('api/', include(router.urls))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
