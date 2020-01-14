@@ -9,3 +9,8 @@ webpack commands (windows):
 1. to update app.js just once: .\node_modules\.bin\webpack --config webpack.config.js
 
 2. to update app.js every time a change is saved on the frontend files: .\node_modules\.bin\webpack --config webpack.config.js --watch
+
+
+
+to run requirements.txt do this in cmd:
+pip3 install -r requirements.txt
