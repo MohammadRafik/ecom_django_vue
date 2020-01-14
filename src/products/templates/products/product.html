@@ -9,12 +9,19 @@
 <p>{{product.description}}</p>
 <strong>CDN${{product.current_price}}</strong>
 
-
-
+<template>
+<form v-on:submit.prevent="update_cart(4,47,1,'hamalaw')" method="post">
+    <input type="hidden" v-model="cart.product_id" name="product_id" value="3">
+    <input type="hidden" v-model="cart.user" name="user" value="hamalaw">
+    <button type="submit">Add to cart</button>
+</form>
+</template>
 {% comment %} rest of the photos {% endcomment %}
+{% if other_images%}
 <p>more images</p>
 {%for image in other_images%}
     <img src="/media/{{image.image_url}}" width='200'>
 {%endfor%}
+{% endif %}
 
 {% endblock content %}

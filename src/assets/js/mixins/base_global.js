@@ -1,9 +1,17 @@
 const axios = require('axios').default;
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
 export const base_global = {
     data: function() {
       return {
-        category: ''
+        category: '',
+        cart:{
+            product_id: '',
+            user: '',
+            quantity: '',
+
+        },
       }
     },
     created: function(){
@@ -32,8 +40,16 @@ export const base_global = {
             this.category = category
         },
 
-        update_cart: function(){
-            axios.post('/api')
+        update_cart: function(product_id, cart_id, quantity = 1, updated_by = 'hamalaw'){
+            console.log('making an axios post request')
+            axios.post('/api/cartitem/', {
+
+                product_id: product_id,
+                cart_id: cart_id,
+                quantity: quantity,
+                updated_by: updated_by,
+                created_by: updated_by
+            })
             .then(function(response){
 
             })
@@ -43,6 +59,6 @@ export const base_global = {
             .finally(function(){
                 
             })
-        }
+        },
     }
   }
