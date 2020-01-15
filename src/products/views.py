@@ -42,6 +42,13 @@ class BaseLoader(View):
 
 
 def product_page(request, product_id):
+    # get cart data
+    from cart.views import get_cart
+    cart = get_cart(request)
+    for cart in cart:
+        urls_cart = request.build_absolute_uri('/api/cart/' + str(cart.id) + '/')
+    urls_product = request.build_absolute_uri('/api/products/' + str(product_id) + '/')
+
     #find product and give it to template
     main_product = list(Product.objects.filter(id = product_id))
     main_product = main_product[0]
@@ -49,7 +56,7 @@ def product_page(request, product_id):
     main_image = main_image[0]
     other_images = ProductImage.find_product_images(product_id)
 
-    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images})
+    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product})
 
 
 

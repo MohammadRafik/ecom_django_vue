@@ -12,6 +12,7 @@ class Cart(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
 
+
     @classmethod
     def get_cart(cls, cart_id=None):
         if cart_id:
@@ -42,6 +43,9 @@ class CartItem(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.product.title + ' cart item'
 
     def find_total_cost(self):
         current_price = self.product.current_price

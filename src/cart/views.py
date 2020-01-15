@@ -3,6 +3,18 @@ from django.views import View
 from cart.models import Cart,CartItem
 
 # Create your views here.
+
+
+
+def get_cart(request):
+    if 'cart_id' in request.session:
+        cart = Cart.get_cart(request.session['cart_id'])
+    else:
+        cart = Cart.get_cart()
+        request.session['cart_id'] = cart.id
+    return cart
+
+
 class CartPageLoader(View):
 
 
@@ -26,6 +38,9 @@ class CartPageLoader(View):
     @classmethod
     def delete_expired_carts(cls):
         pass
+
+
+
 
 from rest_framework import viewsets
 from .serializers import CartItemSerializer, CartSerializer
