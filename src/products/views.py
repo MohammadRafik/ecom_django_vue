@@ -48,6 +48,13 @@ def product_page(request, product_id):
     for cart in cart:
         urls_cart = request.build_absolute_uri('/api/cart/' + str(cart.id) + '/')
     urls_product = request.build_absolute_uri('/api/products/' + str(product_id) + '/')
+    
+    if request.user.is_authenticated:
+        the_user = request.user.get_username()
+    else:
+        the_user = 'anonymous'
+
+
 
     #find product and give it to template
     main_product = list(Product.objects.filter(id = product_id))
@@ -56,7 +63,7 @@ def product_page(request, product_id):
     main_image = main_image[0]
     other_images = ProductImage.find_product_images(product_id)
 
-    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product})
+    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product, 'the_user':the_user})
 
 
 

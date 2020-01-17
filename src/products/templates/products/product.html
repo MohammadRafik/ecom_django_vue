@@ -10,18 +10,12 @@
 <strong>CDN${{product.current_price}}</strong>
 
 <template>
-<form action="/api/cartitem/" method="post">
-{% csrf_token %}
+<form v-on:submit.prevent="update_cart('{{urls_cart}}','{{urls_product}}',1,'{{the_user}}')" method="post">
     <input type="hidden" name="cart" value="{{urls_cart}}">
     <input type="hidden" name="product" value="{{urls_product}}">
     <input type="hidden" name="quanitity" value="1">
-    {% if request.user.is_authenticated %}
-        <input type="hidden" name="updated_by" value="{{request.user.get_username}}">
-        <input type="hidden" name="created_by" value="{{request.user.get_username}}">
-    {% else %}
-        <input type="hidden" name="updated_by" value="anonymous">
-        <input type="hidden" name="created_by" value="anonymous">        
-    {% endif %}
+    <input type="hidden" name="updated_by" value="{{the_user}}">
+    <input type="hidden" name="created_by" value="{{the_user}}">        
     <button type="submit">Add to cart</button>
 </form>
 </template>

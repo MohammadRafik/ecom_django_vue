@@ -40,12 +40,12 @@ export const base_global = {
             this.category = category
         },
 
-        update_cart: function(product_id, cart_id, quantity = 1, updated_by = 'hamalaw'){
+        update_cart: function(cart_url, product_url, quantity = 1, updated_by = 'anonymous'){
             console.log('making an axios post request')
             axios.post('/api/cartitem/', {
 
-                product_id: product_id,
-                cart_id: cart_id,
+                cart: cart_url,
+                product: product_url,
                 quantity: quantity,
                 updated_by: updated_by,
                 created_by: updated_by
