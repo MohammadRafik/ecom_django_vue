@@ -11,7 +11,8 @@ def get_cart(request):
         cart = Cart.get_cart(request.session['cart_id'])
     else:
         cart = Cart.get_cart()
-        request.session['cart_id'] = cart.id
+        for cart2 in cart:
+            request.session['cart_id'] = cart2.id
     return cart
 
 

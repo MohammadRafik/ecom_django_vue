@@ -20,7 +20,7 @@ class Cart(models.Model):
         else:
             cart = cls()
             cart.save()
-            return cart
+            return cls.objects.filter(id = cart.id)
 
 
     def create_cart_item(self, product_id, quantity, user='Anonymous'):
