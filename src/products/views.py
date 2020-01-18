@@ -34,9 +34,22 @@ class BaseLoader(View):
             img = list(ProductImage.find_all_product_images(product.id))
             self.all_product_images += img
 
+        # here we zip the product data with another list that has values to help the template determine when it should start a new card-deck as apposed to card
+        card_deck_update_check = []
+        i= 0
+        for product in self.all_products:
+            if i==0:
+                card_deck_update_check.append('first')
+            elif i%3:
+                card_deck_update_check.append(False)
+            else:
+                card_deck_update_check.append(True)
+            i += 1
+        products_and_carddeck_checker = zip(self.all_products, card_deck_update_check)
+
 
         # this should be to load the homepage, so give featured products and catalog data
-        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'product_images':self.all_product_images })
+        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images })
 
 
 
@@ -71,11 +84,12 @@ def product_page(request, product_id):
 
 
 
-from django.db.models import Q
-import re
+
 ########################################
 #########product searching##############
 ########################################
+from django.db.models import Q
+import re
 
 def normalize_query(query_string,
     findterms=re.compile(r'"([^"]+)"|(\S+)').findall,

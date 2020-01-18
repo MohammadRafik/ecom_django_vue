@@ -1,25 +1,84 @@
 {% extends "base/base.html" %}
 {% block content %}
 
-
-                
-
-                {% comment %} here we load the categories {% endcomment %}
-                {%include "products/components/categories.html" %}
+{% comment %} here we load the categories {% endcomment %}
+{%include "products/components/categories.html" %}
 
 
-                {% for product in products %}
-                    <a href="{% url 'products:product_page' product.id %}" >
-                        <h5> {{product}} </h5>
-                    </a>
-                    {% for product_image in product_images %}
-                        {% if product_image.product == product and product_image.main_picture == True%}
-                            <a href="{% url 'products:product_page' product.id %}">
-                                <img src="/media/{{product_image.image_url}}" width='200'>
+{% comment %} here we load products in card decks {% endcomment %}
+    {% for product, carddeck in products_and_carddeck_checker%}
+        {% if carddeck == 'first' %}
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'products:product_page' product.id %}" >
+                             {{product}}
                             </a>
-                        {% endif %}
-                    {% endfor %}
+                        </h5>
+                {% for product_image in product_images %}
+                    {% if product_image.product == product and product_image.main_picture == True%}
+                        <a href="{% url 'products:product_page' product.id %}">
+                            <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
+                        </a>
+                        <br>
+                        <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
+                    {% endif %}
                 {% endfor %}
+                        <p class="card-text">{{product.description}}</p>
+                    </div>
+                </div>
+        {% endif %}
+        {% if carddeck == True %}
+            <br>
+            </div>
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'products:product_page' product.id %}" >
+                             {{product}}
+                            </a>
+                        </h5>
+                {% for product_image in product_images %}
+                    {% if product_image.product == product and product_image.main_picture == True%}
+                        <a href="{% url 'products:product_page' product.id %}">
+                            <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
+                        </a>
+                        <br>
+                        <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
+                    {% endif %}
+                {% endfor %}
+                        <p class="card-text">{{product.description}}</p>
+                    </div>
+                </div>
+        {% endif %}
+        {% if carddeck == False %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'products:product_page' product.id %}" >
+                             {{product}}
+                            </a>
+                        </h5>
+                {% for product_image in product_images %}
+                    {% if product_image.product == product and product_image.main_picture == True%}
+                        <a href="{% url 'products:product_page' product.id %}">
+                            <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
+                        </a>
+                        <br>
+                        <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
+                    {% endif %}
+                {% endfor %}
+                        <p class="card-text">{{product.description}}</p>
+                    </div>
+                </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+
+
 
 
 {% endblock content %}
