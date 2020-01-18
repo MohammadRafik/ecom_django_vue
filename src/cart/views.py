@@ -48,12 +48,21 @@ class CartPageLoader(View):
                     product_images += img_in_list
                     repeated = False
 
+        # calculate total cost
+        total_cost = 0.0
+        if cart_items:
+            for cart_item in cart_items:
+                total_cost += (float(cart_item.product.current_price) * cart_item.quantity)
+        total_cost = round(total_cost, 2)
+        tax = total_cost*0.13
+        tax = round(tax, 2)
+        total_cost_with_tax = total_cost*1.13
+        total_cost_with_tax = round(total_cost_with_tax, 2)
 
 
 
 
-
-        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images})
+        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax})
 
 
 

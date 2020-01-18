@@ -10,11 +10,11 @@
     <ul class="list-group list-group-flush">
         {% for cart_item in cart_items%}
             <li class="list-group-item">
-            <bold>{{cart_item.product.title}}</bold>
+            <strong>{{cart_item.product.title}}</strong>
             {% for product_image in product_images %}
                 {% if product_image.product_id == cart_item.product_id %}
                     <br><img src="/media/{{product_image.image_url}}" width='50'>
-                    
+                    <p class="text-right"><strong>CDN${{cart_item.product.current_price}}</strong> x {{cart_item.quantity}}</p>
                 {% endif %}
             {% endfor %}
 
@@ -26,4 +26,27 @@
         {% endfor %}
     </ul>
 </div>
+
+{% comment %} total cost {% endcomment %}
+<div class="float-right">
+    <ul class="list-group">
+        <li class="list-group-item">
+            total before tax: {{total_cost}}
+            <br>
+            Tax: {{tax}}
+        </li>
+        <li class="list-group-item">
+        final price:<br><div class="float-right"> CDN${{total_cost_with_tax}}</div>
+        </li>
+    </ul>
+</div>
+<br><br><br><br><br><br><br>
+
+{% comment %} checkout {% endcomment %}
+<form action="">
+<button class="float-right">checkout</button>
+<br><br>
+<p class="float-right">please note the checkout functionality has not been added yet </p>
+</form>
+
 {% endblock content %}
