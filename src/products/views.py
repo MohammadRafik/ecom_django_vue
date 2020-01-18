@@ -148,9 +148,10 @@ def product_search(request):
     found_products = search_for_something(request)
 
     all_product_images = []
-    for product in found_products:
-        img = list(ProductImage.find_all_product_images(product.id))
-        all_product_images += img
+    if found_products:
+        for product in found_products:
+            img = list(ProductImage.find_all_product_images(product.id))
+            all_product_images += img
 
     return render(request, 'products/home.html', {'main_categories':categories, 'all_categories':all_categories, 'products':found_products, 'product_images':all_product_images })
 
