@@ -29,21 +29,24 @@ class CartPageLoader(View):
             self.cart = Cart.get_cart(request.session['cart_id'])
         else:
             self.cart = Cart.get_cart()
-            request.session['cart_id'] = self.cart.id
+            for cart in self.cart:
+                request.session['cart_id'] = cart.id
         for the_cart in self.cart:
             cart_items = the_cart.get_items()
         # load main image for each cart item product
         product_images =  []
         repeated = False
-        for cart_item in cart_items:
-            img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
-            for product_image in product_images:
-                if product_image.id == img_in_list[0].id:
-                    repeated = True
-                    break
-            if not repeated:
-                product_images += img_in_list
+        if cart_items:
+            for cart_item in cart_items:
+                img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
                 repeated = False
+                for product_image in product_images:
+                    if product_image.pk == img_in_list[0].pk:
+                        repeated = True
+                        break
+                if not repeated:
+                    product_images += img_in_list
+                    repeated = False
 
 
 
