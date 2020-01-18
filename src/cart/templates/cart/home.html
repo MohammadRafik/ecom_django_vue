@@ -3,6 +3,23 @@
 
 
 <h1>this is the cart home page, where we show all products added to the cart </h1>
+<div class="card" style="width: 66rem;">
+    <div class="card-header">
+        Cart Porudcts
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for cart_item in cart_items%}
+            <li class="list-group-item">
+            <bold>{{cart_item.product.title}}</bold>
+            {% for product_image in product_images %}
+                {% if product_image.product_id == cart_item.product_id %}
+                    <br><img src="/media/{{product_image.image_url}}" width='50'>
+                    
+                {% endif %}
+            {% endfor %}
 
-
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock content %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from cart.models import Cart,CartItem
+from products.models import ProductImage
 
 # Create your views here.
 
@@ -29,7 +30,27 @@ class CartPageLoader(View):
         else:
             self.cart = Cart.get_cart()
             request.session['cart_id'] = self.cart.id
-        return render(request, 'cart/home.html', {'cart':self.cart})
+        for the_cart in self.cart:
+            cart_items = the_cart.get_items()
+        # load main image for each cart item product
+        product_images =  []
+        repeated = False
+        for cart_item in cart_items:
+            img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
+            for product_image in product_images:
+                if product_image.id == img_in_list[0].id:
+                    repeated = True
+                    break
+            if not repeated:
+                product_images += img_in_list
+                repeated = False
+
+
+
+
+
+
+        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images})
 
 
 

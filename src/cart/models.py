@@ -22,22 +22,13 @@ class Cart(models.Model):
             cart.save()
             return cls.objects.filter(id = cart.id)
 
-
-    def create_cart_item(self, product_id, quantity, user='Anonymous'):
-        #first check if this cart item already exists
-        the_cart_item = self.cart_item.filter(cart_id=self.cart_id, product_id = product_id)
-        if the_cart_item:
-            the_cart_item.update_quantity(quantity)
-            return the_cart_item
-        else:
-            the_cart_item = self.cart_item(product_id=product_id,quantity=quantity,updated_by=str(user),created_by=str(user))
-            the_cart_item.save()
-            return the_cart_item
+    def get_items(self):
+        return self.cart_items.prefetch_related('product').all()
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, related_name='cart_item', on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
@@ -45,7 +36,7 @@ class CartItem(models.Model):
     created_by = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.product.title + ' cart item'
+        return self.product.title + ' cart item from cart object ' + str(self.cart.id)
 
     def find_total_cost(self):
         current_price = self.product.current_price
