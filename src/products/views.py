@@ -126,7 +126,7 @@ def get_query(query_string, search_fields):
         if query is None:
             query = or_query
         else:
-            query = query & or_query
+            query = query | or_query
     return query
 
 def search_for_something(request):
