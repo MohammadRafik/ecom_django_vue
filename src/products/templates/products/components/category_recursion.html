@@ -1,15 +1,15 @@
 {% if category.sub_categories_list != empty_list %}
-    {% comment %} <dropdown :trigger="'hover'" :align="'right'"> {% endcomment %}
-    {% comment %} <template slot="btn"> {% endcomment %}
+    <dropdown :trigger="'hover'" :align="'right'">
+    <template slot="btn">
         <a href="{% url 'products:filter' category %}"> {{category}} </a>
         <br>
-    {% comment %} </template> {% endcomment %}
-    {% comment %} <template slot="body"> {% endcomment %}
+    </template>
+    <template slot="body">
         {% for category in category.sub_categories_list%}
             {% include "products/components/category_recursion.html" %}
         {% endfor !%}
-    {% comment %} </template> {% endcomment %}
-    {% comment %} </dropdown> {% endcomment %}
+    </template>
+    </dropdown>
 {% else %}
     <a href="{% url 'products:filter' category %}" >{{category}}</a>
 {% endif %}

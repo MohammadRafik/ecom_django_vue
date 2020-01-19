@@ -49,7 +49,7 @@ class BaseLoader(View):
 
 
         # this should be to load the homepage, so give featured products and catalog data
-        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images })
+        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images, 'empty_list':[] })
 
 
 
@@ -141,11 +141,28 @@ def search_for_something(request):
     return found_entries
 
 
+# maybe this should be the same fucntion as the get in the normalize query class?
 def product_search(request):
     all_categories = Category.update_sub_category_lists()
     categories = Category.find_main_categories(all_categories)
 
+    # this function here uses whats in the search bar and uses that string to find all products related to it, the search results are not ordered in anyway, its random, which should be changed
+    # the way the search works is that all the keywords have to match the product, it should be so that it matches if any of the keywords match!
     found_products = search_for_something(request)
+
+    # here we zip the product data with another list that has values to help the template determine when it should start a new card-deck as apposed to card
+    card_deck_update_check = []
+    i= 0
+    for product in found_products:
+        if i==0:
+            card_deck_update_check.append('first')
+        elif i%3:
+            card_deck_update_check.append(False)
+        else:
+            card_deck_update_check.append(True)
+        i += 1
+    products_and_carddeck_checker = zip(found_products, card_deck_update_check)
+
 
     all_product_images = []
     if found_products:
@@ -153,8 +170,7 @@ def product_search(request):
             img = list(ProductImage.find_all_product_images(product.id))
             all_product_images += img
 
-    return render(request, 'products/home.html', {'main_categories':categories, 'all_categories':all_categories, 'products':found_products, 'product_images':all_product_images })
-
+    return render(request, 'products/home.html', {'main_categories':categories, 'all_categories':all_categories, 'products':found_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':all_product_images, 'empty_list':[] })
 
 
 
