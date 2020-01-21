@@ -22,6 +22,7 @@ const app = new Vue({
     data: function(){
         return {
             xd: '123',
+
         }
     },
     delimiters: ["[[","]]"],
@@ -30,6 +31,6 @@ const app = new Vue({
         Dropdown,
         Navigation
     },
-    mixins: [base_global]
+    mixins: [base_global],
     
 });

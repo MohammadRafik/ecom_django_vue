@@ -3,19 +3,14 @@ axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
 export const base_global = {
-    data: function() {
+    data: function () {
       return {
         category: '',
         product_description: '',
-        cart:{
-            product_id: '',
-            user: '',
-            quantity: '',
-
-        },
+        added_to_cart_successfully: false
       }
     },
-    created: function(){
+    created: function() {
         console.log('this is mixin')
         // check if there is a saved category in the session
         axios.get('/api/session', {
@@ -26,7 +21,7 @@ export const base_global = {
         .then(function (response){
             //runs when the http request is done successfully
             console.log(response)
-            this.category = response
+            self.category = response
         })
         .catch(function (error){
             //runs when there is an error
@@ -38,11 +33,12 @@ export const base_global = {
     },
     methods: {
         update_category: function(category){
-            this.category = category
+            self.category = category
         },
 
         update_cart: function(cart_url, product_url, quantity = 1, updated_by = 'anonymous'){
             console.log('making an axios post request')
+            let self= this;
             axios.post('/api/cartitem/', {
 
                 cart: cart_url,
@@ -52,7 +48,8 @@ export const base_global = {
                 created_by: updated_by
             })
             .then(function(response){
-
+                console.log('axios post request succesful')
+                self.added_to_cart_successfully = true
             })
             .catch(function (error){
 
