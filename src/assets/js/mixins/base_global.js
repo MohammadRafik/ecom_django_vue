@@ -6,6 +6,7 @@ export const base_global = {
     data: function() {
       return {
         category: '',
+        product_description: '',
         cart:{
             product_id: '',
             user: '',

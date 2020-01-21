@@ -97,3 +97,19 @@
 
 
 {% endblock content %}
+
+
+
+{% comment %} this isnt working i think its because i forced it by making seperate card classes {% endcomment %}
+<style>
+
+
+.card-columns {
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(sm) {
+    column-count: 1;
+  }
+}
+</style>

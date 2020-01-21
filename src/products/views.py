@@ -26,7 +26,10 @@ class BaseLoader(View):
         else:
             self.all_products = Product.get_all_products()
 
-
+        # update the descripton of the product
+        for product in self.all_products:
+            if len(product.description) > 80:
+                product.description = product.description[:80] + '...' 
 
         #now we find all the images we need for each product
         self.all_product_images = []
@@ -148,6 +151,11 @@ def product_search(request):
 
     # this function here uses whats in the search bar and uses that string to find all products related to it, the search results are not ordered in anyway, its random, which should be changed
     found_products = search_for_something(request)
+
+    for product in found_products:
+        if len(product.description) > 80:
+            product.description = product.description[:80] + '...' 
+
 
     # here we zip the product data with another list that has values to help the template determine when it should start a new card-deck as apposed to card
     card_deck_update_check = []
