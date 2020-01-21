@@ -152,23 +152,26 @@ def product_search(request):
     # this function here uses whats in the search bar and uses that string to find all products related to it, the search results are not ordered in anyway, its random, which should be changed
     found_products = search_for_something(request)
 
-    for product in found_products:
-        if len(product.description) > 80:
-            product.description = product.description[:80] + '...' 
+    if found_products:
+        for product in found_products:
+            if len(product.description) > 80:
+                product.description = product.description[:80] + '...' 
 
 
     # here we zip the product data with another list that has values to help the template determine when it should start a new card-deck as apposed to card
-    card_deck_update_check = []
-    i= 0
-    for product in found_products:
-        if i==0:
-            card_deck_update_check.append('first')
-        elif i%3:
-            card_deck_update_check.append(False)
-        else:
-            card_deck_update_check.append(True)
-        i += 1
-    products_and_carddeck_checker = zip(found_products, card_deck_update_check)
+    products_and_carddeck_checker = []
+    if found_products:
+        card_deck_update_check = []
+        i= 0
+        for product in found_products:
+            if i==0:
+                card_deck_update_check.append('first')
+            elif i%3:
+                card_deck_update_check.append(False)
+            else:
+                card_deck_update_check.append(True)
+            i += 1
+        products_and_carddeck_checker = zip(found_products, card_deck_update_check)
 
 
     all_product_images = []

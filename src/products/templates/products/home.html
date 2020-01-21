@@ -20,76 +20,80 @@
   <div class="col-sm-10">
 {% comment %} here we load products in card decks {% endcomment %}
 <br>
-    {% for product, carddeck in products_and_carddeck_checker%}
-        {% if carddeck == 'first' %}
-            <div class="card-columns">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{% url 'products:product_page' product.id %}" >
-                             {{product}}
+    {% if products_and_carddeck_checker != empty_list %}
+        {% for product, carddeck in products_and_carddeck_checker%}
+            {% if carddeck == 'first' %}
+                <div class="card-columns">
+                    <div class="card" style="height: 29rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'products:product_page' product.id %}" >
+                                {{product}}
+                                </a>
+                            </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <a href="{% url 'products:product_page' product.id %}">
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200' height='260'>
                             </a>
-                        </h5>
-                {% for product_image in product_images %}
-                    {% if product_image.product == product and product_image.main_picture == True%}
-                        <a href="{% url 'products:product_page' product.id %}">
-                            <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
-                        </a>
-                        <br>
-                        <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
-                    {% endif %}
-                {% endfor %}
-                        <p class="card-text">{{product.description}}</p>
+                            <br>
+                            <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
+                        {% endif %}
+                    {% endfor %}
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
                     </div>
+            {% endif %}
+            {% if carddeck == True %}
+                <br>
                 </div>
-        {% endif %}
-        {% if carddeck == True %}
-            <br>
+                <div class="card-columns">
+                    <div class="card" style="height: 29rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'products:product_page' product.id %}" >
+                                {{product}}
+                                </a>
+                            </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <a href="{% url 'products:product_page' product.id %}">
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200' height='260'>
+                            </a>
+                            <br>
+                            <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
+                        {% endif %}
+                    {% endfor %}
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                    </div>
+            {% endif %}
+            {% if carddeck == False %}
+                    <div class="card" style="height: 29rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'products:product_page' product.id %}" >
+                                {{product}}
+                                </a>
+                            </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <a href="{% url 'products:product_page' product.id %}">
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200' height='260'>
+                            </a>
+                            <br>
+                            <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
+                        {% endif %}
+                    {% endfor %}
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                    </div>
+            {% endif %}
+        {% endfor %}
             </div>
-            <div class="card-columns">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{% url 'products:product_page' product.id %}" >
-                             {{product}}
-                            </a>
-                        </h5>
-                {% for product_image in product_images %}
-                    {% if product_image.product == product and product_image.main_picture == True%}
-                        <a href="{% url 'products:product_page' product.id %}">
-                            <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
-                        </a>
-                        <br>
-                        <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
-                    {% endif %}
-                {% endfor %}
-                        <p class="card-text">{{product.description}}</p>
-                    </div>
-                </div>
-        {% endif %}
-        {% if carddeck == False %}
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{% url 'products:product_page' product.id %}" >
-                             {{product}}
-                            </a>
-                        </h5>
-                {% for product_image in product_images %}
-                    {% if product_image.product == product and product_image.main_picture == True%}
-                        <a href="{% url 'products:product_page' product.id %}">
-                            <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
-                        </a>
-                        <br>
-                        <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
-                    {% endif %}
-                {% endfor %}
-                        <p class="card-text">{{product.description}}</p>
-                    </div>
-                </div>
-        {% endif %}
-    {% endfor %}
-            </div>
+    {% else %}
+        could not find any items for those specificed search keywords
+    {% endif %}
     </div>
 </div>
 
@@ -113,3 +117,5 @@
   }
 }
 </style>
+
+
