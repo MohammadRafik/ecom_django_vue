@@ -1,8 +1,8 @@
+<li class="list-group-item">
 {% if category.sub_categories_list != empty_list %}
-    <dropdown :trigger="'hover'" :align="'right'">
+    <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
     <template slot="btn">
         <a href="{% url 'products:filter' category %}"> {{category}} </a>
-        <br>
     </template>
     <template slot="body">
         {% for category in category.sub_categories_list%}
@@ -13,6 +13,4 @@
 {% else %}
     <a href="{% url 'products:filter' category %}" >{{category}}</a>
 {% endif %}
-
-
-
+</li>

@@ -147,7 +147,6 @@ def product_search(request):
     categories = Category.find_main_categories(all_categories)
 
     # this function here uses whats in the search bar and uses that string to find all products related to it, the search results are not ordered in anyway, its random, which should be changed
-    # the way the search works is that all the keywords have to match the product, it should be so that it matches if any of the keywords match!
     found_products = search_for_something(request)
 
     # here we zip the product data with another list that has values to help the template determine when it should start a new card-deck as apposed to card

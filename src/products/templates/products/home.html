@@ -2,7 +2,14 @@
 {% block content %}
 
 {% comment %} here we load the categories {% endcomment %}
-{%include "products/components/categories.html" %}
+<div class="card" style="width: 9rem;">
+    <div class="card-header">
+    Catalog
+    </div>
+    <ul class="list-group list-group-flush">
+        {%include "products/components/categories.html" %}
+    </ul>
+</div>
 
 
 {% comment %} here we load products in card decks {% endcomment %}
