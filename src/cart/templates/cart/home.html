@@ -45,11 +45,13 @@
 <br><br><br><br><br><br><br>
 
 {% comment %} checkout {% endcomment %}
-<form action="">
-<button class="float-right">checkout</button>
-<br><br>
-<p class="float-right">please note the checkout functionality has not been added yet </p>
-</form>
+<checkout_script stripe_key="{{stripe_key}}" total_cost="{{total_cost_with_tax}}"></checkout_script>
+
+
+
+
+
+
 <br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br>
 {% endblock content %}

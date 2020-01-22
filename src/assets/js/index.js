@@ -11,7 +11,8 @@ import Dropdown from 'bp-vuejs-dropdown';
 
 // my custom components
 import Demo from "./components/Demo.vue";
-import Navigation from "./components/navigation.vue"
+import Navigation from "./components/navigation.vue";
+import Checkout_script from "./components/checkout_script.vue";
 
 
 // mixins
@@ -29,7 +30,8 @@ const app = new Vue({
     components: {
         Demo,
         Dropdown,
-        Navigation
+        Navigation,
+        Checkout_script
     },
     mixins: [base_global],
     

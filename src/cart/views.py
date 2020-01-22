@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from cart.models import Cart,CartItem
 from products.models import ProductImage
+from django.conf import settings
 
 # Create your views here.
 
@@ -60,9 +61,11 @@ class CartPageLoader(View):
         total_cost_with_tax = round(total_cost_with_tax, 2)
 
 
+        # get stipe key
+        stripe_key = settings.STRIPE_PUBLISHABLE_KEY
 
 
-        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax})
+        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key})
 
 
 

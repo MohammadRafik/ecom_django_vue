@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"app.js","path":"C:\\Users\\aklsd\\Documents\\projects\\ecom_django_vue\\src\\assets\\bundles\\app.js"}]}}
+{"status":"done","error":"ModuleBuildError","message":"Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\aklsd\\Documents\\projects\\ecom_django_vue\\src\\assets\\js\\components\\checkout_button.vue'","chunks":{"main":[{"name":"app.js","path":"C:\\Users\\aklsd\\Documents\\projects\\ecom_django_vue\\src\\assets\\bundles\\app.js"}]}}
