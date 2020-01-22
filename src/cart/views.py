@@ -59,13 +59,14 @@ class CartPageLoader(View):
         tax = round(tax, 2)
         total_cost_with_tax = total_cost*1.13
         total_cost_with_tax = round(total_cost_with_tax, 2)
+        total_cost_for_stripe = total_cost_with_tax*100
 
 
         # get stipe key
         stripe_key = settings.STRIPE_PUBLISHABLE_KEY
 
 
-        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key})
+        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
 
 
 
