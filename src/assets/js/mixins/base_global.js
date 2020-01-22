@@ -58,5 +58,19 @@ export const base_global = {
                 
             })
         },
+        delete_item_from_cart: function(cart_item_id){
+            axios.delete('/api/cartitem/' + cart_item_id)
+            .then(function(response){
+                console.log('item deleted from cart')
+                console.log(response)
+                window.location.reload(true);
+            })
+            .catch(function (error){
+                console.log('error with delete request')
+            })
+            .finally(function(){
+                
+            })
+        }
     }
   }
