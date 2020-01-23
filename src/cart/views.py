@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from cart.models import Cart,CartItem
+from cart.models import Cart,CartItem, CheckoutDetails
 from products.models import ProductImage
 from django.conf import settings
 
@@ -151,7 +151,7 @@ class CheckoutLoader(View):
 
 
 from rest_framework import viewsets
-from .serializers import CartItemSerializer, CartSerializer
+from .serializers import CartItemSerializer, CartSerializer, CheckoutDetailsSerializer
 
 class CartItemViewSet(viewsets.ModelViewSet):
     queryset = CartItem.objects.all()
@@ -160,3 +160,7 @@ class CartItemViewSet(viewsets.ModelViewSet):
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+
+class CheckoutDetailsViewSet(viewsets.ModelViewSet):
+    queryset = CheckoutDetails.objects.all()
+    serializer_class = CheckoutDetailsSerializer

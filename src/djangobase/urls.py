@@ -31,6 +31,7 @@ router.register('productimages', productviews.ProductImageView)
 from cart import views as cartviews
 router.register('cart', cartviews.CartViewSet)
 router.register('cartitem', cartviews.CartItemViewSet)
+router.register('checkoutdetails', cartviews.CheckoutDetailsViewSet)
 
 
 
