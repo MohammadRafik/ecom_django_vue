@@ -92,6 +92,16 @@
                 </div>
                 </div>
             </form>
+            <br>
+                {% comment %} redirect user to registeration page {% endcomment %}
+                <div class="offset-md-7">
+                    <p> Already have an account? <a href="{% url 'accounts:login' %}"> Login </a>
+                    <br>
+                </div>
+                <div class="offset-md-7">
+                    {% comment %} redirect user to home page {% endcomment %}
+                    <p> Take me back <a href="{% url 'products:home' %}"> Home </a> instead </p>
+                </div>
         </div>
     </div>
 </div>
