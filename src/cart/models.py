@@ -49,3 +49,23 @@ class CartItem(models.Model):
 
     def update_quantity(self, quantity):
         self.update(quantity=quantity)
+
+
+
+class CheckoutDetails(models.Model):
+    cart = models.OneToOneField(Cart, related_name='checkout_details', null=True, on_delete=models.SET_NULL)
+    name_of_receiver = models.CharField(max_length=100)
+    main_address = models.CharField(max_length=200)
+    secondary_address = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=100)
+    province = models.CharField(max_length=20)
+    postal_code = models.CharField(max_length=12)
+    phone_number = models.CharField(max_length=12)
+    updated_by = models.CharField(max_length=100)
+    updated_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.main_address + ' for ' + self.name_of_receiver
+    

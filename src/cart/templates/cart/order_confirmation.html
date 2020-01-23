@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 {% block content %}
-
+<br>
 <h4 > Your order has been successfully processed, the total cost was CDN$ {{ total_cost_with_tax}} for the following products:</h4>
 <ul class="list-group">
     {% for cart_item in cart_items %}
@@ -17,7 +17,9 @@
 </ul>
 
 <br><br><br>
-<div class="float-right">
+<div class="float">
     <h4> Thank You!</h4>
+    {% comment %} redirect user to home page {% endcomment %}
+    <p> Take me back <a href="{% url 'products:home' %}"> Home </a> </p>
 </div>
 {% endblock content %}
