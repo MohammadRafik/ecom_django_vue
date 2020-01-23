@@ -45,7 +45,10 @@
                 final price:<br><br>
                     <div class="float-right">
                         CDN${{total_cost_with_tax}}
+                        <form action="{% url 'cart:order_confirmation' %}" method="post">
+                        {% csrf_token %}
                         <checkout_script stripe_key="{{stripe_key}}" total_cost="{{total_cost_for_stripe}}"></checkout_script>
+                        </form>
                     </div>
                     {% comment %} checkout {% endcomment %}
                     <br>
