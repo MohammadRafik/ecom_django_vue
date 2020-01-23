@@ -69,6 +69,7 @@ class CartPageLoader(View):
         return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
 
 
+
     def find_total_cart_items(self):
         pass
 
@@ -113,6 +114,41 @@ def order_confirmation(request):
     for one_cart in new_cart:
         request.session['cart_id'] = one_cart.id
     return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe})
+
+
+
+
+
+
+class CheckoutLoader(View):
+
+    def get(self, request):
+
+        return render(request, 'cart/checkout_page.html', {})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 from rest_framework import viewsets
 from .serializers import CartItemSerializer, CartSerializer
