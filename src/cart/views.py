@@ -131,8 +131,51 @@ class CheckoutLoader(View):
     def post(self, request):
         form = CheckoutForm(request.POST)
         if form.is_valid():
+            # form is valid, now need to create and save a checkoutdetails model object :D
             # access data with form.cleaned_data now
-            return redirect('confirmation')
+            cart = Cart.get_cart(request.session['cart_id'])
+            for the_cart in cart:
+                the_cart = the_cart
+                cart_items = the_cart.get_items()
+
+            if request.user.is_authenticated:
+                user = request.user.get_username()
+            else:
+                user = 'anonymous'
+
+            # calculate total cost
+            total_cost = 0.0
+            if cart_items:
+                for cart_item in cart_items:
+                    total_cost += (float(cart_item.product.current_price) * cart_item.quantity)
+            total_cost = round(total_cost, 2)
+            tax = total_cost*0.13
+            tax = round(tax, 2)
+            total_cost_with_tax = total_cost*1.13
+            total_cost_with_tax = round(total_cost_with_tax, 2)
+            total_cost_for_stripe = total_cost_with_tax*100
+            stripe_key = settings.STRIPE_PUBLISHABLE_KEY
+
+            # check if checkoutDetails object already exists, if yes update it, if no make one
+            if CheckoutDetails.objects.filter(cart_id = the_cart.id).count():
+                checkout_details = CheckoutDetails.objects.get(cart_id = the_cart.id)
+                checkout_details.cart = the_cart
+                checkout_details.name_of_receiver = form.cleaned_data['name_of_receiver']
+                checkout_details.main_address = form.cleaned_data['main_address']
+                checkout_details.secondary_address = form.cleaned_data['secondary_address']
+                checkout_details.city = form.cleaned_data['city']
+                checkout_details.province = form.cleaned_data['province']
+                checkout_details.postal_code = form.cleaned_data['postal_code']
+                checkout_details.phone_number = form.cleaned_data['phone_number']
+                checkout_details.updated_by = user
+                checkout_details.created_by = user
+                checkout_details.save()
+            else:
+                checkout_details = CheckoutDetails( cart = the_cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
+            checkout_details.save()
+
+
+            return render(request, 'cart/make_payment.html', { 'form': form,'checkout_details':checkout_details, 'cart':the_cart, 'cart_items':cart_items, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
         else:
             return render(request, self.checkout_template_name, {'form':form})
             

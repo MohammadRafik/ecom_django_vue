@@ -1,0 +1,60 @@
+{% extends "base/base.html" %}
+{% block content %}
+<br>
+<h4 > final step, please make sure all the data is correct, then proceed to make payment:</h4>
+<p> shipping address: &#160;{{checkout_details.main_address}}, {{ checkout_details.city }}, {{checkout_details.province}}</p>
+<p> postal code: &#160;{{checkout_details.postal_code}}</p>
+<p> name of reveiver: &#160;{{checkout_details.name_of_receiver}}</p>
+<br>
+<h4> purchasing the following items:<h4>
+<br>
+<div class="card">
+    <div class="card-header">
+        Porudcts you are purchasing
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for cart_item in cart_items%}
+            <li class="list-group-item">
+            <strong>{{cart_item.product.title}}</strong>
+            <p class="text-right"><strong>CDN${{cart_item.product.current_price}}</strong> x {{cart_item.quantity}}</p>
+            </li>
+        {% empty %}
+            <li class="list-group-item">
+                you dont have any products in your cart
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% comment %} total cost {% endcomment %}
+<br><br><br>
+<div class="col-sm-3">
+<div class="float-right">
+    <ul class="list-group">
+        <li class="list-group-item">
+            total before tax: {{total_cost}}
+            <br>
+            Tax: {{tax}}
+        </li>
+        <li class="list-group-item">
+        final price:<br><br>
+            <div class="float-right">
+                CDN${{total_cost_with_tax}}
+                <form action="{% url 'cart:order_confirmation' %}" method="post">
+                {% csrf_token %}
+                <checkout_script stripe_key="{{stripe_key}}" total_cost="{{total_cost_for_stripe}}"></checkout_script>
+                </form>
+            </div>
+            {% comment %} checkout {% endcomment %}
+            <br>
+        </li>
+    </ul>
+</div>
+<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
+<br><br><br><br>
+
+
+<br><br><br>
+
+{% endblock content %}
