@@ -1,5 +1,6 @@
 from django.db import models
 from products.models import Product
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -53,6 +54,7 @@ class CartItem(models.Model):
 
 
 class CheckoutDetails(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     cart = models.OneToOneField(Cart, related_name='checkout_details', null=True, on_delete=models.SET_NULL)
     name_of_receiver = models.CharField(max_length=100)
     main_address = models.CharField(max_length=200)

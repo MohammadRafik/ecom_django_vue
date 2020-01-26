@@ -3,7 +3,7 @@ from django.views import View
 from cart.models import Cart,CartItem, CheckoutDetails
 from products.models import ProductImage
 from django.conf import settings
-
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -140,9 +140,9 @@ class CheckoutLoader(View):
 
             if request.user.is_authenticated:
                 user = request.user.get_username()
+                userObject = User.objects.get(username = user)
             else:
                 user = 'anonymous'
-
             # calculate total cost
             total_cost = 0.0
             if cart_items:
@@ -159,6 +159,8 @@ class CheckoutLoader(View):
             # check if checkoutDetails object already exists, if yes update it, if no make one
             if CheckoutDetails.objects.filter(cart_id = the_cart.id).count():
                 checkout_details = CheckoutDetails.objects.get(cart_id = the_cart.id)
+                if 'userObject' in locals():
+                    checkout_details.user = userObject
                 checkout_details.cart = the_cart
                 checkout_details.name_of_receiver = form.cleaned_data['name_of_receiver']
                 checkout_details.main_address = form.cleaned_data['main_address']
@@ -171,7 +173,10 @@ class CheckoutLoader(View):
                 checkout_details.created_by = user
                 checkout_details.save()
             else:
-                checkout_details = CheckoutDetails( cart = the_cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
+                if 'userObject' in locals():
+                    checkout_details = CheckoutDetails( user = userObject, cart = the_cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
+                else:
+                    checkout_details = CheckoutDetails(cart = the_cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
             checkout_details.save()
 
 
