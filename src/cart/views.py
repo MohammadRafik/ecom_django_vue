@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from cart.models import Cart,CartItem, CheckoutDetails
 from products.models import ProductImage
@@ -66,7 +66,7 @@ class CartPageLoader(View):
         stripe_key = settings.STRIPE_PUBLISHABLE_KEY
 
 
-        return render(request, 'cart/home.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
+        return render(request, 'cart/home2.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
 
 
 
@@ -119,14 +119,23 @@ def order_confirmation(request):
 
 
 
-
+from cart.forms import CheckoutForm
 class CheckoutLoader(View):
+    checkout_template_name = 'cart/checkout_page.html'
+
 
     def get(self, request):
+        form = CheckoutForm()
+        return render(request, self.checkout_template_name, {'form':form})
 
-        return render(request, 'cart/checkout_page.html', {})
-
-
+    def post(self, request):
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            # access data with form.cleaned_data now
+            return redirect('confirmation')
+        else:
+            return render(request, self.checkout_template_name, {'form':form})
+            
 
 
 

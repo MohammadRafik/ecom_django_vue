@@ -67,5 +67,5 @@ class CheckoutDetails(models.Model):
     created_by = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.main_address + ' for ' + self.name_of_receiver
+        return  'products to ' + self.main_address + ' for ' + self.name_of_receiver
     
