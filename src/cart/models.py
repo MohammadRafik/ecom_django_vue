@@ -26,6 +26,10 @@ class Cart(models.Model):
     def get_items(self):
         return self.cart_items.prefetch_related('product').all()
 
+    def get_items_count(self):
+        return len(self.get_items())
+
+
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE)

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
 from cart.models import Cart,CartItem, CheckoutDetails
 from products.models import ProductImage
@@ -138,7 +138,7 @@ class CheckoutLoader(View):
 def order_confirmation(request):
     cart = Cart.get_cart(request.session['cart_id'])
     for the_cart in cart:
-            cart_items = the_cart.get_items()
+        cart_items = the_cart.get_items()
     # load main image for each cart item product
     product_images =  []
     repeated = False
@@ -217,6 +217,19 @@ def order_history(request):
 
 
 
+
+
+# this is to get number of items in cart
+def get_cart_items_count(request):
+    if 'cart_id' in request.session:
+        cart = Cart.get_cart(request.session['cart_id'])
+    else:
+        cart = Cart.get_cart()
+        for cart in cart:
+            request.session['cart_id'] = cart.id
+    for cart in cart:
+        item_count_in_cart = cart.get_items_count()
+    return HttpResponse(item_count_in_cart)
 
 
 
