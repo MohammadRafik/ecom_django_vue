@@ -20,9 +20,6 @@ def get_cart(request):
 
 class CartPageLoader(View):
 
-
-
-
     def get(self, request):
         #what we need for this page it to enable it to be able to get all data from the carts, so
         #all the products, their costs and total cost, main photo of each product, and ability to remove items from the cart
@@ -67,56 +64,6 @@ class CartPageLoader(View):
 
 
         return render(request, 'cart/home2.html', {'cart':self.cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
-
-
-
-    def find_total_cart_items(self):
-        pass
-
-    @classmethod
-    def delete_expired_carts(cls):
-        pass
-
-def order_confirmation(request):
-    cart = Cart.get_cart(request.session['cart_id'])
-    for the_cart in cart:
-            cart_items = the_cart.get_items()
-    # load main image for each cart item product
-    product_images =  []
-    repeated = False
-    if cart_items:
-        for cart_item in cart_items:
-            img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
-            repeated = False
-            for product_image in product_images:
-                if product_image.pk == img_in_list[0].pk:
-                    repeated = True
-                    break
-            if not repeated:
-                product_images += img_in_list
-                repeated = False
-
-    # calculate total cost
-    total_cost = 0.0
-    if cart_items:
-        for cart_item in cart_items:
-            total_cost += (float(cart_item.product.current_price) * cart_item.quantity)
-    total_cost = round(total_cost, 2)
-    tax = total_cost*0.13
-    tax = round(tax, 2)
-    total_cost_with_tax = total_cost*1.13
-    total_cost_with_tax = round(total_cost_with_tax, 2)
-    total_cost_for_stripe = total_cost_with_tax*100
-
-
-    # clear out cart session and make new cart
-    new_cart = Cart.get_cart()
-    for one_cart in new_cart:
-        request.session['cart_id'] = one_cart.id
-    return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe})
-
-
-
 
 
 from cart.forms import CheckoutForm
@@ -184,6 +131,82 @@ class CheckoutLoader(View):
         else:
             return render(request, self.checkout_template_name, {'form':form})
             
+
+
+
+
+def order_confirmation(request):
+    cart = Cart.get_cart(request.session['cart_id'])
+    for the_cart in cart:
+            cart_items = the_cart.get_items()
+    # load main image for each cart item product
+    product_images =  []
+    repeated = False
+    if cart_items:
+        for cart_item in cart_items:
+            img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
+            repeated = False
+            for product_image in product_images:
+                if product_image.pk == img_in_list[0].pk:
+                    repeated = True
+                    break
+            if not repeated:
+                product_images += img_in_list
+                repeated = False
+
+    # calculate total cost
+    total_cost = 0.0
+    if cart_items:
+        for cart_item in cart_items:
+            total_cost += (float(cart_item.product.current_price) * cart_item.quantity)
+    total_cost = round(total_cost, 2)
+    tax = total_cost*0.13
+    tax = round(tax, 2)
+    total_cost_with_tax = total_cost*1.13
+    total_cost_with_tax = round(total_cost_with_tax, 2)
+    total_cost_for_stripe = total_cost_with_tax*100
+
+
+    # clear out cart session and make new cart
+    new_cart = Cart.get_cart()
+    for one_cart in new_cart:
+        request.session['cart_id'] = one_cart.id
+    return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe})
+
+
+
+def order_history(request):
+    order_history = CheckoutDetails.objects.filter(user_id = request.user.id)
+    cart_items_list = []
+    product_images = []
+    total_costs = []
+    for order in order_history:
+        cart_items = order.cart.get_items()
+        cart_items_list.append(cart_items)
+        #get product images
+        repeated = False
+        if cart_items:
+            for cart_item in cart_items:
+                img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
+                repeated = False
+                for product_image in product_images:
+                    if product_image.pk == img_in_list[0].pk:
+                        repeated = True
+                        break
+                if not repeated:
+                    product_images += img_in_list
+                    repeated = False
+        #get order total cost
+        total_cost = 0.0
+        for cart_item in cart_items:
+            total_cost += (float(cart_item.product.current_price) * cart_item.quantity)
+        total_cost = round(total_cost, 2)
+        total_cost_with_tax = total_cost*1.13
+        total_cost_with_tax = round(total_cost_with_tax, 2)
+        total_costs.append(total_cost_with_tax)
+
+    order_cartitem_history = zip( order_history, cart_items_list, total_costs)
+    return render(request, 'cart/order_history.html', {'orders':order_history, 'cart_items':cart_items, 'order_cartitem_history':order_cartitem_history, 'product_images':product_images})
 
 
 

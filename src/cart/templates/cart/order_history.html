@@ -1,0 +1,50 @@
+{% extends "base/base.html" %}
+{% block content %}
+<br>
+<p>this is a list of all you're previouse orders:<p>
+{% for order, cart_items, cost in order_cartitem_history %}
+
+
+
+<div class="row">
+    <div class="col-sm-9">
+        <div class="card">
+            <div class="card-header">
+                Order #{{order.id}}
+                <div class="float-right">
+                    total cost: {{cost}}
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% comment %} list of cart items for 1 order {% endcomment %}
+                {% for cart_item in cart_items %}
+                    <li class="list-group-item">
+                    <strong>{{cart_item.product.title}}</strong>
+                    {% for product_image in product_images %}
+                        {% if product_image.product_id == cart_item.product_id %}
+                            <br><img src="/media/{{product_image.image_url}}" width='50'>
+                            <p class="text-right"><strong>CDN${{cart_item.product.current_price}}</strong> x {{cart_item.quantity}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="card-footer">
+                <p>
+                    address shipped to: {{order.main_address}}, {{order.city}}, {{order.province}}
+                </p>
+                <p>
+                    person shipped to: {{order.name_of_receiver}}
+                </p>
+                <div class="float-right">
+                    Order placed on: {{order.created_on}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+{% empty %}
+it looks like you have not ordered anything, or maybe you made your orders without being logged in
+{% endfor %}
+{% endblock content %}

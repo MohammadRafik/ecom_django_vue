@@ -17,9 +17,18 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'cart:cartpageloader' %}"><img src="{% static 'base/imgs/shopping-cart.png' %}" width="30px"></a>
         </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart:order_history' %}">my orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:home' %}">{{request.user.get_username}}'s profile</a>
+        </li>
+        {% else %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'accounts:login' %}"><img src="{% static 'base/imgs/user.png' %}" width="30px"></a>
         </li>
+        {% endif %}
         {% comment %} <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             #
