@@ -34,7 +34,7 @@
                     {% for product_image in product_images %}
                         {% if product_image.product == product and product_image.main_picture == True%}
                             <a href="{% url 'products:product_page' product.id %}">
-                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200' height='260'>
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
                             </a>
                             <br>
                             <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
@@ -58,7 +58,7 @@
                     {% for product_image in product_images %}
                         {% if product_image.product == product and product_image.main_picture == True%}
                             <a href="{% url 'products:product_page' product.id %}">
-                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200' height='260'>
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
                             </a>
                             <br>
                             <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>
@@ -79,7 +79,7 @@
                     {% for product_image in product_images %}
                         {% if product_image.product == product and product_image.main_picture == True%}
                             <a href="{% url 'products:product_page' product.id %}">
-                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200' height='260'>
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
                             </a>
                             <br>
                             <strong><p class="card-text"> CDN$ {{product.current_price}}</p></strong>

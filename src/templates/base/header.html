@@ -18,11 +18,14 @@
             <a class="nav-link" href="{% url 'cart:cartpageloader' %}"><img src="{% static 'base/imgs/shopping-cart.png' %}" width="30px"></a>
         </li>
         {% if request.user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'cart:order_history' %}">my orders</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'accounts:home' %}">{{request.user.get_username}}'s profile</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{request.user.get_username}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'cart:order_history' %}">my orders</a>
+                <a class="dropdown-item" href="{% url 'accounts:home' %}">{{request.user.get_username}}'s profile</a>
+            </div>
         </li>
         {% else %}
         <li class="nav-item">

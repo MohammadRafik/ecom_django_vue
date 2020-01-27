@@ -19,7 +19,7 @@
                     {% endfor %}
                 {% comment %} button to remove item from cart {% endcomment %}
                     <form v-on:submit.prevent="delete_item_from_cart('{{cart_item.id}}')" method="delete">    
-                        <button type="submit">remove from cart</button>
+                        <button class="btn-warning" type="submit">remove from cart</button>
                     </form>
                     
                     </li>
@@ -49,7 +49,7 @@
 
 
                         <form action="{% url 'cart:checkout_page' %}" method="get">
-                            <button> proceed to checkout </button>
+                            <button class="btn-info"> proceed to checkout </button>
                         </form>
 
 

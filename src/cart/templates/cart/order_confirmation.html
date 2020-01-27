@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% block content %}
 <br>
-<h4 > Your order has been successfully processed, the total cost was CDN$ {{ total_cost_with_tax}} for the following products:</h4>
+<h4 ><div class="alert alert-success" role="alert"> Your order has been successfully processed</div> the total cost was CDN$ {{ total_cost_with_tax}} for the following products:</h4>
 <ul class="list-group">
     {% for cart_item in cart_items %}
 
