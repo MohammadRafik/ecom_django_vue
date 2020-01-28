@@ -3,7 +3,7 @@ from django.views import View
 from products.models import Category, Supplier, Product, ProductImage, FeaturedProduct,FeaturedProductImage
 import os
 from rest_framework import viewsets
-from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer, FeaturedProductSerializer, FeaturedProductImageSerializer
+from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
 from django.http import HttpRequest, HttpResponse
 
 # this class is used to find all catagorys in the database bring them
@@ -219,20 +219,6 @@ class ProductView(viewsets.ModelViewSet):
 class ProductImageView(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
-
-#featured products views
-class FeaturedProductView(viewsets.ModelViewSet):
-    queryset = FeaturedProduct.objects.all()
-    serializer_class = FeaturedProductSerializer
-
-class FeaturedProductImageView(viewsets.ModelViewSet):
-    queryset = FeaturedProductImage.objects.all()
-    serializer_class = FeaturedProductImageSerializer
-
-
-
-
-
 
 
 
