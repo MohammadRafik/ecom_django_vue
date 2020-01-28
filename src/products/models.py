@@ -145,44 +145,15 @@ class Product(models.Model):
 
 
 
+
+
+
+
+
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)############################################
     image_url = models.ImageField(upload_to='images/products')
-    main_picture = models.BooleanField(default=False)
-    updated_by = models.CharField(max_length=100)
-    updated_on = models.DateTimeField(auto_now=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.product.title
-
-    @classmethod
-    def find_product_images(cls, product_id):
-        return cls.objects.filter(product_id = product_id,  main_picture = False)
-
-    @classmethod
-    def find_main_product_image(cls, product_id):
-        return cls.objects.filter(product_id = product_id, main_picture = True)
-
-    @classmethod
-    def find_all_product_images(cls, product_id):
-        return cls.objects.filter(product_id = product_id)
-
-
-
-
-
-class FeaturedProduct(Product):
-    atomic = False
-    def __str__(self):
-        return self.title
-
-
-
-class FeaturedProductImage(models.Model):
-    FeaturedProducts = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)############################################
-    image_url = models.ImageField(upload_to='images/featured_products')
     main_picture = models.BooleanField(default=False)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
