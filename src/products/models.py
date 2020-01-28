@@ -180,7 +180,7 @@ class FeaturedProduct(Product):
 
 
 class FeaturedProductImage(models.Model):
-    featured_product = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)############################################
+    featured_product = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)
     image_url = models.ImageField(upload_to='images/featured_products')
     main_picture = models.BooleanField(default=False)
     updated_by = models.CharField(max_length=100)

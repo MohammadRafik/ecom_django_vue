@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Supplier, Product, ProductImage
+from .models import Category, Supplier, Product, ProductImage, FeaturedProduct, FeaturedProductImage
 
 class SupplierSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -26,3 +26,20 @@ class ProductImageSerializer(serializers.HyperlinkedModelSerializer):
         model = ProductImage
         fields = ( 'id', 'product', 'image_url', 'main_picture',  'updated_by', 'updated_on', 'created_on', 'created_by')
 
+
+
+
+# featured items serializer
+
+
+class FeaturedProductSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = FeaturedProduct
+        fields = ( 'id', 'title', 'description', 'category', 'product_supplier', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
+
+class FeaturedProductImageSerializer(serializers.HyperlinkedModelSerializer):
+    
+    class Meta:
+        model = FeaturedProductImage
+        fields = ( 'id', 'featured_product', 'image_url', 'main_picture',  'updated_by', 'updated_on', 'created_on', 'created_by')
