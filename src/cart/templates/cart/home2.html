@@ -47,10 +47,11 @@
                         CDN${{total_cost_with_tax}}
 
 
-
+                        {% if cart_items%}
                         <form action="{% url 'cart:checkout_page' %}" method="get">
                             <button class="btn-info"> proceed to checkout </button>
                         </form>
+                        {%endif%}
 
 
 
