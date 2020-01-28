@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from products.models import Category, Supplier, Product, ProductImage
+from products.models import Category, Supplier, Product, ProductImage, FeaturedProduct,FeaturedProductImage
 import os
 from rest_framework import viewsets
 from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
@@ -25,7 +25,12 @@ class BaseLoader(View):
             self.all_products = Product.get_products_from_list_of_categories(self.list_of_all_categories_from_filter)
         else:
             self.all_products = Product.get_all_products()
-
+            # if filter is empty it also means we are on the home page where we should also load the featured products!
+            self.featured_products = FeaturedProduct.get_all_products()
+            self.featured_product_images = []
+            for featured_product in self.featured_products:
+                img = list(FeaturedProductImage.find_all_product_images(featured_product.id))
+                self.featured_product_images += img
         # update the descripton of the product
         for product in self.all_products:
             if len(product.description) > 80:
@@ -52,7 +57,7 @@ class BaseLoader(View):
 
 
         # this should be to load the homepage, so give featured products and catalog data
-        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images, 'empty_list':[] })
+        return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images, 'empty_list':[], 'featured_products':self.featured_products, 'featured_product_images':self.featured_product_images })
 
 
 
