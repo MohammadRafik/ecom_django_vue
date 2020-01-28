@@ -112,10 +112,13 @@ class Product(models.Model):
     length = models.FloatField(default=0)
     width = models.FloatField(default=0)
     height = models.FloatField(default=0)
+    # this is a new field im adding for featured products that go on the home page on the slider
+    featured = models.BooleanField(default=False)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
+
 
     def __str__(self):
         return self.title
@@ -126,7 +129,7 @@ class Product(models.Model):
 
     @classmethod
     def get_all_products(cls):
-        return cls.objects.all()
+        return cls.objects.filter(featured=False)
 
     @classmethod
     def get_products_by_category_id(cls, category_id):
@@ -137,7 +140,7 @@ class Product(models.Model):
     def get_products_from_list_of_categories(cls, list_of_category_and_all_its_sub_categories):
         products = []
         for single_category in list_of_category_and_all_its_sub_categories:
-            product = list(cls.objects.filter(category = single_category))
+            product = list(cls.objects.filter(category = single_category, featured=False))
             products = products + product
         return products
 
