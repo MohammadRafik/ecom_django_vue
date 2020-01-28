@@ -3,7 +3,14 @@
 
 <br>
 please fill out this form so we can get your shipping address and other needed data, then proceed to the payment page
-<br><br><br>
+<br><br>
+{% if request.user.is_authenticated == False %}
+    <div class="alert alert-danger" role="alert">
+    please note that if you are not logged in you will not be able to look at your order history later on
+    </div>
+{%endif%}
+
+<br>
 <form action="{% url 'cart:checkout_page' %}" method='post'>
     {% csrf_token %}
     <div class="row">
