@@ -95,6 +95,20 @@ export const base_global = {
             .finally(function(){
                 
             })
-        }
+        },
+
+      
+        enter: function(el, done) {
+    
+            var self = this;
+            setTimeout(function() {
+                self.added_to_cart_successfully = false
+            }, 1500); // hide the message after 1.5 seconds
+        },
+      
+
     }
   }
+
+
+

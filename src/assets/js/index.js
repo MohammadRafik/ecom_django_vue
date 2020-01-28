@@ -2,7 +2,7 @@ window.$ = window.jQuery = require('jquery');
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Vue from 'vue';
-// importing axios needs to be done on each component seperatly
+// importing axios needs to be done on each component or mixin seperatly
 const axios = require('axios').default;
 
 
@@ -36,3 +36,5 @@ const app = new Vue({
     mixins: [base_global],
     
 });
+
+
