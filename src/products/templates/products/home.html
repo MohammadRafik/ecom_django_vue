@@ -1,6 +1,18 @@
 {% extends "base/base.html" %}
 {% block content %}
 
+
+<vueper-slides :dragging-distance="50">
+  <vueper-slide
+    v-for="(slide, i) in slides"
+    :key="i"
+    :image="'images/' + slide.image"
+    :title="slide.title"
+    :content="slide.content"
+    :link="slide.link" />
+</vueper-slides>
+
+
 {% comment %} here we load the categories {% endcomment %}
 <div class="row">
 

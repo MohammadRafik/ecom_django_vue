@@ -8,6 +8,9 @@ const axios = require('axios').default;
 
 // components
 import Dropdown from 'bp-vuejs-dropdown';
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
+
 
 // my custom components
 import Demo from "./components/Demo.vue";
@@ -31,7 +34,9 @@ const app = new Vue({
         Demo,
         Dropdown,
         Navigation,
-        Checkout_script
+        Checkout_script,
+        VueperSlides,
+        VueperSlide
     },
     mixins: [base_global],
     
