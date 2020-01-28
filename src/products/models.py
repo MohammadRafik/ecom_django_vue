@@ -173,32 +173,71 @@ class ProductImage(models.Model):
 
 
 
-class FeaturedProduct(Product):
-    def __str__(self):
-        return self.title
+# class FeaturedProduct(models.Model):
+#     title = models.CharField(max_length=250)
+#     description = models.TextField(max_length=800, null=True, blank=True)
+#     category = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
+#     product_supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, default='pepega')#################################################################
+#     current_price = models.DecimalField(max_digits=9,decimal_places=2)
+#     base_price = models.DecimalField(max_digits=9,decimal_places=2)
+#     cost = models.DecimalField(max_digits=9,decimal_places=2,default=0)
+#     quantity = models.IntegerField()
+#     tags = models.CharField(max_length=250, null=True, blank=True, help_text='keywords to help with searching and SEO')
+#     weight = models.FloatField(default=0)
+#     length = models.FloatField(default=0)
+#     width = models.FloatField(default=0)
+#     height = models.FloatField(default=0)
+#     updated_by = models.CharField(max_length=100)
+#     updated_on = models.DateTimeField(auto_now=True)
+#     created_on = models.DateTimeField(auto_now_add=True)
+#     created_by = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return self.title
+
+
+#     # def return_all_child_categories(self):
+#     #     return self.category.get_all_sub_categories()
+
+#     @classmethod
+#     def get_all_products(cls):
+#         return cls.objects.all()
+
+#     @classmethod
+#     def get_products_by_category_id(cls, category_id):
+#         return cls.objects.filter(category_id = category_id)
+
+
+#     @classmethod
+#     def get_products_from_list_of_categories(cls, list_of_category_and_all_its_sub_categories):
+#         products = []
+#         for single_category in list_of_category_and_all_its_sub_categories:
+#             product = list(cls.objects.filter(category = single_category))
+#             products = products + product
+#         return products
 
 
 
-class FeaturedProductImage(models.Model):
-    featured_product = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)
-    image_url = models.ImageField(upload_to='images/featured_products')
-    main_picture = models.BooleanField(default=False)
-    updated_by = models.CharField(max_length=100)
-    updated_on = models.DateTimeField(auto_now=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.CharField(max_length=100)
+# class FeaturedProductImage(models.Model):
+#     featured_product = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)
+#     image_url = models.ImageField(upload_to='images/featured_products')
+#     main_picture = models.BooleanField(default=False)
+#     updated_by = models.CharField(max_length=100)
+#     updated_on = models.DateTimeField(auto_now=True)
+#     created_on = models.DateTimeField(auto_now_add=True)
+#     created_by = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.featured_product.title
+#     def __str__(self):
+#         return self.featured_product.title
  
-    @classmethod
-    def find_product_images(cls, product_id):
-        return cls.objects.filter(featured_product_id = product_id,  main_picture = False)
+#     @classmethod
+#     def find_product_images(cls, product_id):
+#         return cls.objects.filter(featured_product_id = product_id,  main_picture = False)
 
-    @classmethod
-    def find_main_product_image(cls, product_id):
-        return cls.objects.filter(featured_product_id = product_id, main_picture = True)
+#     @classmethod
+#     def find_main_product_image(cls, product_id):
+#         return cls.objects.filter(featured_product_id = product_id, main_picture = True)
 
-    @classmethod
-    def find_all_product_images(cls, product_id):
-        return cls.objects.filter(featured_product_id = product_id)
+#     @classmethod
+#     def find_all_product_images(cls, product_id):
+#         return cls.objects.filter(featured_product_id = product_id)

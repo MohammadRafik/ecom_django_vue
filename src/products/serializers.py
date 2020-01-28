@@ -32,14 +32,14 @@ class ProductImageSerializer(serializers.HyperlinkedModelSerializer):
 # featured items serializer
 
 
-class FeaturedProductSerializer(serializers.HyperlinkedModelSerializer):
+# class FeaturedProductSerializer(serializers.HyperlinkedModelSerializer):
 
-    class Meta:
-        model = FeaturedProduct
-        fields = ( 'id', 'title', 'description', 'category', 'product_supplier', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
+#     class Meta:
+#         model = FeaturedProduct
+#         fields = ( 'id', 'title', 'description', 'category', 'product_supplier', 'current_price', 'base_price', 'cost', 'quantity', 'tags', 'weight', 'length', 'width', 'height', 'updated_by', 'updated_on', 'created_on', 'created_by' )
 
-class FeaturedProductImageSerializer(serializers.HyperlinkedModelSerializer):
+# class FeaturedProductImageSerializer(serializers.HyperlinkedModelSerializer):
     
-    class Meta:
-        model = FeaturedProductImage
-        fields = ( 'id', 'featured_product', 'image_url', 'main_picture',  'updated_by', 'updated_on', 'created_on', 'created_by')
+#     class Meta:
+#         model = FeaturedProductImage
+#         fields = ( 'id', 'featured_product', 'image_url', 'main_picture',  'updated_by', 'updated_on', 'created_on', 'created_by')
