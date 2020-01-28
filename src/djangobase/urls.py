@@ -26,8 +26,8 @@ router.register('categories', productviews.CategoryView)
 router.register('suppliers', productviews.SupplierView)
 router.register('products', productviews.ProductView)
 router.register('productimages', productviews.ProductImageView)
-# router.register('featuredproducts', productviews.FeaturedProductView)
-# router.register('featuredproductimages', productviews.FeaturedProductImageView)
+router.register('featuredproducts', productviews.FeaturedProductView)
+router.register('featuredproductimages', productviews.FeaturedProductImageView)
 
 #including the models of a different app here to add them to the api easily
 from cart import views as cartviews

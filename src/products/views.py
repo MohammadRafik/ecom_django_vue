@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.views import View
-from products.models import Category, Supplier, Product, ProductImage
-# , FeaturedProduct,FeaturedProductImage
+from products.models import Category, Supplier, Product, ProductImage, FeaturedProduct,FeaturedProductImage
 import os
 from rest_framework import viewsets
-from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
-# , FeaturedProductSerializer, FeaturedProductImageSerializer
+from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer, FeaturedProductSerializer, FeaturedProductImageSerializer
 from django.http import HttpRequest, HttpResponse
 
 # this class is used to find all catagorys in the database bring them
@@ -28,13 +26,11 @@ class BaseLoader(View):
         else:
             self.all_products = Product.get_all_products()
             # if filter is empty it also means we are on the home page where we should also load the featured products!
-            # self.featured_products = FeaturedProduct.get_all_products()
-            # self.featured_product_images = []
-            # for featured_product in self.featured_products:
-            #     img = list(FeaturedProductImage.find_all_product_images(featured_product.id))
-            #     self.featured_product_images += img
-
-
+            self.featured_products = FeaturedProduct.get_all_products()
+            self.featured_product_images = []
+            for featured_product in self.featured_products:
+                img = list(FeaturedProductImage.find_all_product_images(featured_product.id))
+                self.featured_product_images += img
         # update the descripton of the product
         for product in self.all_products:
             if len(product.description) > 80:
@@ -225,13 +221,13 @@ class ProductImageView(viewsets.ModelViewSet):
     serializer_class = ProductImageSerializer
 
 #featured products views
-# class FeaturedProductView(viewsets.ModelViewSet):
-#     queryset = FeaturedProduct.objects.all()
-#     serializer_class = FeaturedProductSerializer
+class FeaturedProductView(viewsets.ModelViewSet):
+    queryset = FeaturedProduct.objects.all()
+    serializer_class = FeaturedProductSerializer
 
-# class FeaturedProductImageView(viewsets.ModelViewSet):
-#     queryset = FeaturedProductImage.objects.all()
-#     serializer_class = FeaturedProductImageSerializer
+class FeaturedProductImageView(viewsets.ModelViewSet):
+    queryset = FeaturedProductImage.objects.all()
+    serializer_class = FeaturedProductImageSerializer
 
 
 
