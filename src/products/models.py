@@ -174,13 +174,14 @@ class ProductImage(models.Model):
 
 
 class FeaturedProduct(Product):
+    atomic = False
     def __str__(self):
         return self.title
 
 
 
 class FeaturedProductImage(models.Model):
-    featured_product = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)############################################
+    FeaturedProducts = models.ForeignKey(FeaturedProduct, on_delete=models.CASCADE)############################################
     image_url = models.ImageField(upload_to='images/featured_products')
     main_picture = models.BooleanField(default=False)
     updated_by = models.CharField(max_length=100)
@@ -189,16 +190,16 @@ class FeaturedProductImage(models.Model):
     created_by = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.featured_product.title
- 
+        return self.product.title
+
     @classmethod
     def find_product_images(cls, product_id):
-        return cls.objects.filter(featured_product_id = product_id,  main_picture = False)
+        return cls.objects.filter(product_id = product_id,  main_picture = False)
 
     @classmethod
     def find_main_product_image(cls, product_id):
-        return cls.objects.filter(featured_product_id = product_id, main_picture = True)
+        return cls.objects.filter(product_id = product_id, main_picture = True)
 
     @classmethod
     def find_all_product_images(cls, product_id):
-        return cls.objects.filter(featured_product_id = product_id)
+        return cls.objects.filter(product_id = product_id)
