@@ -23,8 +23,11 @@
     <div id="app">
 
         {% include 'base/header.html' %}
-        <div class="container">
+        
+        {% block before_container %}
+        {% endblock %}
 
+        <div class="container">
             {% block content %}
             {% endblock %}
 

@@ -42,5 +42,7 @@
     "webpack-bundle-tracker": "^0.4.3",
     "webpack-cli": "^3.3.10"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vueperslides": "^2.8.2"
+  }
 }

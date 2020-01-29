@@ -50,8 +50,15 @@ class BaseLoader(View):
             i += 1
         products_and_carddeck_checker = zip(self.all_products, card_deck_update_check)
 
+        if filter == '':
+            self.featured_products = Product.objects.filter(featured=True)
 
-        # this should be to load the homepage, so give featured products and catalog data
+            self.featured_product_images = []
+            for featured_product in self.featured_products:
+                img = list(ProductImage.find_all_product_images(featured_product.id))
+                self.featured_product_images += img
+        # this should be to load the homepage, so give featured products and catalog data                                                                                                                                                                                              featured_products
+            return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images, 'empty_list':[], 'featured_products':self.featured_products, 'featured_product_images':self.featured_product_images })
         return render(request, 'products/home.html', {'main_categories':self.categories, 'all_categories':self.all_categories, 'products':self.all_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':self.all_product_images, 'empty_list':[] })
 
 
@@ -210,6 +217,18 @@ class CategoryView(viewsets.ModelViewSet):
 class ProductView(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    # # this overrides the noraml way this api is used so wont be able to do /api/products anymore
+    # # later i should make it so that it only overrides if request.get[featured] is populated
+    # def get_queryset(self):
+    #     """
+    #     Optionally restricts the returned purchases to a given user,
+    #     by filtering against a `username` query parameter in the URL.
+    #     """
+    #     featured = self.request.GET['featured']
+    #     queryset = Product.objects.filter(featured=featured)
+    #     return queryset
+
 
 class ProductImageView(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
