@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 #add functionality to be able to remove a cartItem, or change its quantity
 
 class Cart(models.Model):
-
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     updated_by = models.CharField(max_length=100)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -32,6 +32,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
+    
     cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
