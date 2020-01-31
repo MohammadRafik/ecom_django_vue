@@ -6,3 +6,7 @@ eCommerce website made with django and vue.js
 3. run `pip3 install -r requirements.txt`
 pip3 is pip 19.3.1 from python 3.7
 4. run `npm install`
+
+now you need to run a server with django, so do this:
+1. redirect path to src `cd src`
+2. run `py manage.py runserver` py is python 3.7 (you can do `py --version` to check)
