@@ -19,9 +19,9 @@ class BaseLoader(View):
 
         # here we use the filter to load the products accordingly!
         if filter != '':
-            self.category_from_filter = list(Category.objects.filter(name = filter))
-            self.list_of_all_categories_from_filter = Category.get_all_sub_categories(self.category_from_filter[0])
-            self.list_of_all_categories_from_filter.append(self.category_from_filter[0])
+            self.category_from_filter = Category.objects.get(name = filter)
+            self.list_of_all_categories_from_filter = Category.get_all_sub_categories(self.category_from_filter)
+            self.list_of_all_categories_from_filter.append(self.category_from_filter)
             self.all_products = Product.get_products_from_list_of_categories(self.list_of_all_categories_from_filter)
         else:
             self.all_products = Product.get_all_products()
@@ -80,10 +80,8 @@ def product_page(request, product_id):
 
 
     #find product and give it to template
-    main_product = list(Product.objects.filter(id = product_id))
-    main_product = main_product[0]
-    main_image = list(ProductImage.find_main_product_image(product_id))
-    main_image = main_image[0]
+    main_product = Product.objects.get(id = product_id)
+    main_image = ProductImage.find_main_product_image(product_id)
     other_images = ProductImage.find_product_images(product_id)
 
     return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product, 'the_user':the_user})

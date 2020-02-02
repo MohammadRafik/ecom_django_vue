@@ -2,7 +2,7 @@ eCommerce website made with django and vue.js
 
 ## How to set up
 
-1. get python version 3.7
+1. get python version 3.7,and make sure you have pip, and npm
 2. clone the project `git clone https://github.com/MohammadRafik/ecom_django_vue.git`
 3. redirect path to ecom_django_vue `cd ecom_django_vue`
 4. create a virtual environment `py -m venv env` py is python 3.7 (you can do `py --version` to check)
