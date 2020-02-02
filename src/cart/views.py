@@ -13,8 +13,7 @@ def get_cart(request):
         cart = Cart.get_cart(request.session['cart_id'])
     else:
         cart = Cart.get_cart()
-        for cart2 in cart:
-            request.session['cart_id'] = cart2.id
+        request.session['cart_id'] = cart.id
     return cart
 
 
@@ -23,14 +22,9 @@ class CartPageLoader(View):
     def get(self, request):
         #what we need for this page it to enable it to be able to get all data from the carts, so
         #all the products, their costs and total cost, main photo of each product, and ability to remove items from the cart
-        if 'cart_id' in request.session:
-            self.cart = Cart.get_cart(request.session['cart_id'])
-        else:
-            self.cart = Cart.get_cart()
-            for cart in self.cart:
-                request.session['cart_id'] = cart.id
-        for the_cart in self.cart:
-            cart_items = the_cart.get_items()
+        self.cart = get_cart(request)
+        cart_items = self.cart.get_items()
+
         # load main image for each cart item product
         product_images =  []
         repeated = False
@@ -81,9 +75,7 @@ class CheckoutLoader(View):
             # form is valid, now need to create and save a checkoutdetails model object :D
             # access data with form.cleaned_data now
             cart = Cart.get_cart(request.session['cart_id'])
-            for the_cart in cart:
-                the_cart = the_cart
-                cart_items = the_cart.get_items()
+            cart_items = cart.get_items()
 
             if request.user.is_authenticated:
                 user = request.user.get_username()
@@ -104,11 +96,11 @@ class CheckoutLoader(View):
             stripe_key = settings.STRIPE_PUBLISHABLE_KEY
 
             # check if checkoutDetails object already exists, if yes update it, if no make one
-            if CheckoutDetails.objects.filter(cart_id = the_cart.id).count():
-                checkout_details = CheckoutDetails.objects.get(cart_id = the_cart.id)
+            if CheckoutDetails.objects.filter(cart_id = cart.id).count():
+                checkout_details = CheckoutDetails.objects.get(cart_id = cart.id)
                 if 'userObject' in locals():
                     checkout_details.user = userObject
-                checkout_details.cart = the_cart
+                checkout_details.cart = cart
                 checkout_details.name_of_receiver = form.cleaned_data['name_of_receiver']
                 checkout_details.main_address = form.cleaned_data['main_address']
                 checkout_details.secondary_address = form.cleaned_data['secondary_address']
@@ -121,13 +113,13 @@ class CheckoutLoader(View):
                 checkout_details.save()
             else:
                 if 'userObject' in locals():
-                    checkout_details = CheckoutDetails( user = userObject, cart = the_cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
+                    checkout_details = CheckoutDetails( user = userObject, cart = cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
                 else:
-                    checkout_details = CheckoutDetails(cart = the_cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
+                    checkout_details = CheckoutDetails(cart = cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user, created_by = user)
             checkout_details.save()
 
 
-            return render(request, 'cart/make_payment.html', { 'form': form,'checkout_details':checkout_details, 'cart':the_cart, 'cart_items':cart_items, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
+            return render(request, 'cart/make_payment.html', { 'form': form,'checkout_details':checkout_details, 'cart':cart, 'cart_items':cart_items, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
         else:
             return render(request, self.checkout_template_name, {'form':form})
             
@@ -137,8 +129,7 @@ class CheckoutLoader(View):
 
 def order_confirmation(request):
     cart = Cart.get_cart(request.session['cart_id'])
-    for the_cart in cart:
-        cart_items = the_cart.get_items()
+    cart_items = cart.get_items()
     # load main image for each cart item product
     product_images =  []
     repeated = False
@@ -167,10 +158,10 @@ def order_confirmation(request):
     total_cost_for_stripe = total_cost_with_tax*100
 
 
-    # clear out cart session and make new cart
+    # clear out cart session and make new cart and update session with new cart
+    # note the big difference between get_cart() and Cart.get_cart()
     new_cart = Cart.get_cart()
-    for one_cart in new_cart:
-        request.session['cart_id'] = one_cart.id
+    request.session['cart_id'] = new_cart.id
     return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe})
 
 
@@ -187,14 +178,14 @@ def order_history(request):
         repeated = False
         if cart_items:
             for cart_item in cart_items:
-                img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
+                img_in_list = ProductImage.find_main_product_image(cart_item.product.id)
                 repeated = False
                 for product_image in product_images:
-                    if product_image.pk == img_in_list[0].pk:
+                    if product_image.pk == img_in_list.pk:
                         repeated = True
                         break
                 if not repeated:
-                    product_images += img_in_list
+                    product_images.append(img_in_list)
                     repeated = False
         #get order total cost
         total_cost = 0.0
@@ -221,14 +212,8 @@ def order_history(request):
 
 # this is to get number of items in cart
 def get_cart_items_count(request):
-    if 'cart_id' in request.session:
-        cart = Cart.get_cart(request.session['cart_id'])
-    else:
-        cart = Cart.get_cart()
-        for cart in cart:
-            request.session['cart_id'] = cart.id
-    for cart in cart:
-        item_count_in_cart = cart.get_items_count()
+    cart = get_cart(request)
+    item_count_in_cart = cart.get_items_count()
     return HttpResponse(item_count_in_cart)
 
 

@@ -17,11 +17,11 @@ class Cart(models.Model):
     @classmethod
     def get_cart(cls, cart_id=None):
         if cart_id:
-            return cls.objects.filter(id = cart_id)
+            return cls.objects.get(id = cart_id)
         else:
             cart = cls()
             cart.save()
-            return cls.objects.filter(id = cart.id)
+            return cls.objects.get(id = cart.id)
 
     def get_items(self):
         return self.cart_items.prefetch_related('product').all()
