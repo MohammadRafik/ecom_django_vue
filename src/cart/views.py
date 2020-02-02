@@ -30,14 +30,14 @@ class CartPageLoader(View):
         repeated = False
         if cart_items:
             for cart_item in cart_items:
-                img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
+                img_in_list = ProductImage.find_main_product_image(cart_item.product.id)
                 repeated = False
                 for product_image in product_images:
-                    if product_image.pk == img_in_list[0].pk:
+                    if product_image.pk == img_in_list.pk:
                         repeated = True
                         break
                 if not repeated:
-                    product_images += img_in_list
+                    product_images.append(img_in_list)
                     repeated = False
 
         # calculate total cost
@@ -135,14 +135,14 @@ def order_confirmation(request):
     repeated = False
     if cart_items:
         for cart_item in cart_items:
-            img_in_list = list(ProductImage.find_main_product_image(cart_item.product.id))
+            img_in_list = ProductImage.find_main_product_image(cart_item.product.id)
             repeated = False
             for product_image in product_images:
-                if product_image.pk == img_in_list[0].pk:
+                if product_image.pk == img_in_list.pk:
                     repeated = True
                     break
             if not repeated:
-                product_images += img_in_list
+                product_images.append(img_in_list)
                 repeated = False
 
     # calculate total cost
