@@ -1,2 +1,10 @@
 add back button when on product page
 
+refactor the repetetive code
+
+add links to some of the models so the frontend can easily access the image url's using the API
+
+data should be returned to JS in json format... so ya alot of code refactor there.... xd
+
+
+

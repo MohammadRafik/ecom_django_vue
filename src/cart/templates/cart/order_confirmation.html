@@ -1,25 +1,33 @@
 {% extends "base/base.html" %}
 {% block content %}
 <br>
-<h4 ><div class="alert alert-success" role="alert"> Your order has been successfully processed</div> the total cost was CDN$ {{ total_cost_with_tax}} for the following products:</h4>
-<ul class="list-group">
-    {% for cart_item in cart_items %}
+{% if payment_confirmation == total_cost_with_tax %}
+    <ul class="list-group">
+    <h4 ><div class="alert alert-success" role="alert"> Your order has been successfully processed</div> the total cost was CDN$ {{ total_cost_with_tax}} for the following products:</h4>
+        {% for cart_item in cart_items %}
+            <li class="list-group-item">
+                <strong>
+                    {{cart_item.product.title}}
+                </strong>
+            </li>
+        {% empty %}
+        wait hold on, you didnt even buy anything! how did you reach this page!!! >:( im reporting you to the internet police!!
 
-        <li class="list-group-item">
-            <strong>
-                {{cart_item.product.title}}
-            </strong>
-        </li>
-    {% empty %}
-    wait hold on, you didnt even buy anything!
+        {% endfor %}
+    </ul>
 
-    {% endfor %}
-</ul>
-
-<br><br><br>
+    <br><br><br>
+    <div class="float">
+        <h4> Thank You!</h4>
+        {% comment %} redirect user to home page {% endcomment %}
+        <p> Take me back <a href="{% url 'products:home' %}"> Home </a> </p>
+    </div>
+{% else %}
 <div class="float">
-    <h4> Thank You!</h4>
+    <p></p>
+    <h4> Error, your order confirmation failed. did you pay?</h4>
     {% comment %} redirect user to home page {% endcomment %}
     <p> Take me back <a href="{% url 'products:home' %}"> Home </a> </p>
 </div>
+{% endif %}
 {% endblock content %}

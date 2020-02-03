@@ -156,13 +156,20 @@ def order_confirmation(request):
     total_cost_with_tax = total_cost*1.13
     total_cost_with_tax = round(total_cost_with_tax, 2)
     total_cost_for_stripe = total_cost_with_tax*100
+    if request.method == "GET":
+        payment_confirmation = ''
+    elif request.POST['payment_confirmation']:
+        payment_confirmation = float(request.POST['payment_confirmation'])
+    else:
+        payment_confirmation = ''
+    #reset this val
 
 
     # clear out cart session and make new cart and update session with new cart
     # note the big difference between get_cart() and Cart.get_cart()
     new_cart = Cart.get_cart()
     request.session['cart_id'] = new_cart.id
-    return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe})
+    return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe, 'payment_confirmation':payment_confirmation, 'true_string':'True'})
 
 
 

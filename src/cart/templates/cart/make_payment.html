@@ -4,7 +4,7 @@
 <h4 > final step, please make sure all the data is correct, then proceed to make payment:</h4>
 <p> shipping address: &#160;{{checkout_details.main_address}}, {{ checkout_details.city }}, {{checkout_details.province}}</p>
 <p> postal code: &#160;{{checkout_details.postal_code}}</p>
-<p> name of reveiver: &#160;{{checkout_details.name_of_receiver}}</p>
+<p> name of receiver: &#160;{{checkout_details.name_of_receiver}}</p>
 <br>
 <h4> purchasing the following items:<h4>
 <br>
@@ -43,6 +43,7 @@
                 <form action="{% url 'cart:order_confirmation' %}" method="post">
                 {% csrf_token %}
                 <checkout_script stripe_key="{{stripe_key}}" total_cost="{{total_cost_for_stripe}}"></checkout_script>
+                <input type="hidden" name="payment_confirmation" value="{{total_cost_with_tax}}">
                 </form>
             </div>
             {% comment %} checkout {% endcomment %}
