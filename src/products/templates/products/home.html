@@ -35,17 +35,6 @@
 {% comment %} here we have a slideshow of featured products {% endcomment %}
 
 {% if featured_products %}
-
-    {% for featured_product in featured_products %}
-    {% comment %} here im going to feed the links img url's title, and description to a vue function that will load the data into slide so the vueper-slide has the data it needs to work {% endcomment %}
-    {% comment %} i was initailly goin to do it with the api, but i realized the urls im getting are from django's rendered template {% endcomment %}
-        {% for featured_product_image in featured_product_images %}
-            {% if featured_product_image.product == featured_product and featured_product_image.main_picture == True%}
-                {% comment %} if these parameters have quotes or enter in them it causes bug {% endcomment %}
-                <onload v-on:load="load_data_into_slides('{% url 'products:product_page' featured_product.id %}', '{{featured_product_image.image_url}}', '{{featured_product.title}}', {{featured_product.id}})"></onload>
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
     <vueper-slides autoplay >
         <vueper-slide
             v-for="slide in slides"

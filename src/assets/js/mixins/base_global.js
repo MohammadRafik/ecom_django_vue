@@ -12,7 +12,6 @@ export const base_global = {
       }
     },
     created: function() {
-        console.log('this is mixin')
         // check if there is a saved category in the session
         self = this
         axios.get('/api/session', {
@@ -22,10 +21,7 @@ export const base_global = {
         })
         .then(function (response){
             //runs when the http request is done successfully
-            console.log('GET REQUEST SUCCESSFULLY RETURND THE SESSION VALUE WITH KEY OF INDEX')
-            console.log(response)
             self.category = response
-            console.log('end of index response')
         })
         .catch(function (error){
             //runs when there is an error
@@ -37,10 +33,8 @@ export const base_global = {
 
 
         // update cart_item_count by getting the count from backend
-        console.log('making axios get request to fetch cart item count')
         axios.get('/cart/get_cart_items_count')
         .then(function (response){
-            console.log(response)
             self.cart_item_count = response.data
         })
 
@@ -50,17 +44,14 @@ export const base_global = {
             self.category = category
         },
         update_cart_item_count: function(){
-            console.log('making axios get request to fetch cart item count')
             self = this
             axios.get('/cart/get_cart_items_count')
             .then(function (response){
-                console.log(response)
                 self.cart_item_count = response.data
             })
         },
 
         update_cart: function(cart_url, product_url, quantity = 1, updated_by = 'anonymous'){
-            console.log('making an axios post request')
             let self= this;
             axios.post('/api/cartitem/', {
 

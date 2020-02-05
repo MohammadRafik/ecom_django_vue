@@ -254,8 +254,7 @@ class SessionAccess(View):
         return HttpResponse(request.session[index])
 
 
-# load_data_into_slides('{% url 'products:product_page' featured_product.id %}', '{{featured_product_image.image_url}}', '{{featured_product.title}}', {{featured_product.id}})
-# update_cart('{{urls_cart}}','{{urls_product}}',1,'{{the_user}}'
+
 
 # api -> featured product + featured product images, title
 # notinapi -> urll 'products:product_page'
@@ -263,10 +262,10 @@ class SessionAccess(View):
 #simple api request that takes in app name, path url name, and returns the full url, its like being able to do {{ url 'appName:urlName' 'variable'}}
 def get_url(request):
     app_and_url_name = request.GET['app_and_url_name']
-    if request.GET['args']:
-        url_args =  request.GET['url_args']
-        url = reverse(app_and_url_name, args=[url_args])
+    if request.GET['url_arg']:
+        url_arg =  request.GET['url_arg']
+        url = reverse(app_and_url_name, args=[url_arg])
     else:
         url = reverse(app_and_url_name)
-    return url
+    return HttpResponse(url)
 
