@@ -91,6 +91,7 @@ export const base_global = {
             })
             .catch(function (error){
                 console.log('error with delete request')
+                console.log(error)
             })
             .finally(function(){
                 

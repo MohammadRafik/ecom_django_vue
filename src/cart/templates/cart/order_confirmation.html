@@ -1,6 +1,7 @@
 {% extends "base/base.html" %}
 {% block content %}
 <br>
+{% comment %} this is a simple check, its not important if it fails, its just a check to see what part of the html should be loaded {% endcomment %}
 {% if payment_confirmation == total_cost_with_tax %}
     <ul class="list-group">
     <h4 ><div class="alert alert-success" role="alert"> Your order has been successfully processed</div> the total cost was CDN$ {{ total_cost_with_tax}} for the following products:</h4>

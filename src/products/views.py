@@ -5,6 +5,7 @@ import os
 from rest_framework import viewsets
 from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
 from django.http import HttpRequest, HttpResponse
+from django.urls import reverse
 
 # this class is used to find all catagorys in the database bring them
 # in, and check if a catagory is selected and load things accordingly
@@ -72,9 +73,9 @@ def product_page(request, product_id):
     urls_product = request.build_absolute_uri('/api/products/' + str(product_id) + '/')
     
     if request.user.is_authenticated:
-        the_user = request.user.get_username()
+        username = request.user.get_username()
     else:
-        the_user = 'anonymous'
+        username = 'anonymous'
 
 
 
@@ -83,7 +84,8 @@ def product_page(request, product_id):
     main_image = ProductImage.find_main_product_image(product_id)
     other_images = ProductImage.find_product_images(product_id)
 
-    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product, 'the_user':the_user})
+
+    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product, 'username':username})
 
 
 
@@ -235,7 +237,7 @@ class ProductImageView(viewsets.ModelViewSet):
 
 
 
-# simple session read write api to be used with axios
+# simple session read write api
 class SessionAccess(View):
     def get(self, request):
         index = request.GET['index']
@@ -250,3 +252,21 @@ class SessionAccess(View):
         value = request.POST['value']
         request.session[index] = value
         return HttpResponse(request.session[index])
+
+
+# load_data_into_slides('{% url 'products:product_page' featured_product.id %}', '{{featured_product_image.image_url}}', '{{featured_product.title}}', {{featured_product.id}})
+# update_cart('{{urls_cart}}','{{urls_product}}',1,'{{the_user}}'
+
+# api -> featured product + featured product images, title
+# notinapi -> urll 'products:product_page'
+
+#simple api request that takes in app name, path url name, and returns the full url, its like being able to do {{ url 'appName:urlName' 'variable'}}
+def get_url(request):
+    app_and_url_name = request.GET['app_and_url_name']
+    if request.GET['args']:
+        url_args =  request.GET['url_args']
+        url = reverse(app_and_url_name, args=[url_args])
+    else:
+        url = reverse(app_and_url_name)
+    return url
+

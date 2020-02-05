@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 
-{% block base_head%}
+{% block base_head %}
 <style>
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
@@ -25,12 +25,12 @@
 <strong>CDN${{product.current_price}}</strong>
 
 <template>
-<form v-on:submit.prevent="update_cart('{{urls_cart}}','{{urls_product}}',1,'{{the_user}}')" method="post">
+<form v-on:submit.prevent="update_cart('{{urls_cart}}','{{urls_product}}',1,'{{username}}')" method="post">
     <input type="hidden" name="cart" value="{{urls_cart}}">
     <input type="hidden" name="product" value="{{urls_product}}">
     <input type="hidden" name="quanitity" value="1">
-    <input type="hidden" name="updated_by" value="{{the_user}}">
-    <input type="hidden" name="created_by" value="{{the_user}}">        
+    <input type="hidden" name="updated_by" value="{{username}}">
+    <input type="hidden" name="created_by" value="{{username}}">        
     <button type="submit" class="btn-info">Add to cart</button>
 </form>
 </template>
@@ -43,9 +43,9 @@
 
 
 {% comment %} rest of the photos {% endcomment %}
-{% if other_images%}
+{% if other_images %}
 <p>more images</p>
-{%for image in other_images%}
+{% for image in other_images %}
     <img src="/media/{{image.image_url}}" width='600'>
     <br><br>
 {%endfor%}
