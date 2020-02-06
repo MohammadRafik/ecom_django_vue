@@ -35,7 +35,7 @@
 {% comment %} here we have a slideshow of featured products {% endcomment %}
 
 {% if featured_products %}
-    <vueper-slides autoplay >
+    <vueper-slides autoplay transition-speed='400'>
         <vueper-slide
             v-for="slide in slides"
             :key="slide.id"
