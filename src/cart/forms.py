@@ -16,7 +16,12 @@ class CheckoutForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={'class': 'form-control'})
         }
 
-
+    # here we change one the fields so that it wont be required by the frontend
+    def __init__(self, *args, **kwargs):
+        # first call parent's constructor
+        super(CheckoutForm, self).__init__(*args, **kwargs)
+        # there's a `fields` property now
+        self.fields['secondary_address'].required = False
 
 
 
