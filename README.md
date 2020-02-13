@@ -13,3 +13,8 @@ eCommerce website made with django and vue.js
 now you need to run a local server using django, so do this:
 1. redirect path to src `cd src`
 2. run `py manage.py runserver` py is python 3.7 (you can do `py --version` to check)
+
+
+demo: 
+
+![](ecom_demo.gif)
