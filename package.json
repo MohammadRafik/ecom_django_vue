@@ -29,7 +29,7 @@
     "bootstrap-sass": "^3.4.1",
     "bp-vuejs-dropdown": "^2.1.1",
     "css-loader": "^2.1.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "node-sass": "^4.13.0",
     "popper.js": "^1.15.0",
     "sass-loader": "^7.3.1",
