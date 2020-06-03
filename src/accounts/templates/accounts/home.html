@@ -3,19 +3,27 @@
     {% if request.user.is_authenticated %}
     <br>
         Hello {{request.user.get_username}}, you are logged in, this is the account home page
-
-        
-    <br><br><br><br><br>
+        <br><br><br>
+        <form onsubmit='' action="{% url 'cart:order_history'%}">
+            <div>
+                <button type="submit" class="btn btn-info">
+                    order history
+                </button>
+            </div>
+        </form>
+    <br>
         <form onsubmit="" action="{% url 'accounts:logout' %}" method="get">
         {% csrf_token %}
-            <div class="float-right">
-                <button type="submit" class="btn btn-primary">
+            <div class="float-left">
+                <button type="submit" class="btn btn-warning">
                     Logout
                 </button>
             </div>
         </form>
     {% else %}
         You are not logged in
+        <br><br>
+        <a href="{% url 'accounts:login' %}">Click here</a> to go to the login page
     {% endif %}
 
 {% endblock content %}
