@@ -67,8 +67,8 @@ class BaseLoader(View):
 
 def product_page(request, product_id):
     # get cart data
-    from cart.views import get_cart
-    cart = get_cart(request)
+    from cart.models import Cart
+    cart = Cart.get_cart(request)
     urls_cart = request.build_absolute_uri('/api/cart/' + str(cart.id) + '/')
     urls_product = request.build_absolute_uri('/api/products/' + str(product_id) + '/')
     

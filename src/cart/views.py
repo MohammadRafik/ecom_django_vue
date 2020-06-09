@@ -8,21 +8,13 @@ from django.contrib.auth.models import User
 
 
 
-def get_cart(request):
-    if 'cart_id' in request.session:
-        cart = Cart.get_cart(request.session['cart_id'])
-    else:
-        cart = Cart.get_cart()
-        request.session['cart_id'] = cart.id
-    return cart
-
 
 class CartPageLoader(View):
 
     def get(self, request):
         #what we need for this page it to enable it to be able to get all data from the carts, so
         #all the products, their costs and total cost, main photo of each product, and ability to remove items from the cart
-        self.cart = get_cart(request)
+        self.cart = Cart.get_cart(request)
         cart_items = self.cart.get_items()
 
         # load main image for each cart item product
@@ -74,7 +66,7 @@ class CheckoutLoader(View):
         if form.is_valid():
             # form is valid, now need to create and save a checkoutdetails model object :D
             # access data with form.cleaned_data now
-            cart = Cart.get_cart(request.session['cart_id'])
+            cart = Cart.get_cart(request)
             cart_items = cart.get_items()
 
             if request.user.is_authenticated:
@@ -128,7 +120,7 @@ class CheckoutLoader(View):
 
 
 def order_confirmation(request):
-    cart = Cart.get_cart(request.session['cart_id'])
+    cart = Cart.get_cart(request)
     cart_items = cart.get_items()
     # load main image for each cart item product
     product_images =  []
@@ -165,10 +157,8 @@ def order_confirmation(request):
     #reset this val
 
 
-    # clear out cart session and make new cart and update session with new cart
-    # note the big difference between get_cart() and Cart.get_cart()
-    new_cart = Cart.get_cart()
-    request.session['cart_id'] = new_cart.id
+    # now we reset the cart by creating and using a new one
+    new_cart = Cart.get_new_cart(request)
     return render(request, 'cart/order_confirmation.html', {'cart':cart, 'cart_items':cart_items, 'product_images':product_images, 'total_cost':total_cost,'tax':tax, 'total_cost_with_tax':total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe, 'payment_confirmation':payment_confirmation, 'true_string':'True'})
 
 
@@ -219,7 +209,7 @@ def order_history(request):
 
 # this is to get number of items in cart
 def get_cart_items_count(request):
-    cart = get_cart(request)
+    cart = Cart.get_cart(request)
     item_count_in_cart = cart.get_items_count()
     return HttpResponse(item_count_in_cart)
 

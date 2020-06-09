@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-#add functionality to be able to remove a cartItem, or change its quantity
+#add functionality to be able to change its quantity
 
 class Cart(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -14,14 +14,24 @@ class Cart(models.Model):
     created_by = models.CharField(max_length=100)
 
 
+
+
     @classmethod
-    def get_cart(cls, cart_id=None):
-        if cart_id:
-            return cls.objects.get(id = cart_id)
+    def get_cart(cls, request):
+        if 'cart_id' in request.session:
+            return cls.objects.get(id=request.session['cart_id'])
         else:
-            cart = cls()
-            cart.save()
-            return cls.objects.get(id = cart.id)
+            return cls.get_new_cart(request)
+
+    @classmethod
+    def get_new_cart(cls, request):
+        cart = cls()
+        cart.save()
+        request.session['cart_id'] = cart.id
+        return cart
+
+
+
 
     def get_items(self):
         return self.cart_items.prefetch_related('product').all()
@@ -49,9 +59,6 @@ class CartItem(models.Model):
         tax = 1.12
         self.total_cost = self.quantity * current_price * tax
         return self.total_cost
-
-    def find_item_price(self):
-        return self.product.current_price
 
     def update_quantity(self, quantity):
         self.update(quantity=quantity)
