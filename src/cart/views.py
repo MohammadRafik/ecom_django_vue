@@ -10,27 +10,39 @@ from django.contrib.auth.models import User
 
 
 class CartPageLoader(View):
-
+    
+    #here we get all cart data for the homepage
     def get(self, request):
-        #what we need for this page it to enable it to be able to get all data from the carts, so
-        #all the products, their costs and total cost, main photo of each product, and ability to remove items from the cart
         self.cart = Cart.get_cart(request)
         cart_items = self.cart.get_items()
 
-        # load main image for each cart item product
-        product_images =  []
-        repeated = False
+        cart_product_ids = {}
+        product_images = []
         if cart_items:
             for cart_item in cart_items:
-                img_in_list = ProductImage.find_main_product_image(cart_item.product.id)
-                repeated = False
-                for product_image in product_images:
-                    if product_image.pk == img_in_list.pk:
-                        repeated = True
-                        break
-                if not repeated:
-                    product_images.append(img_in_list)
-                    repeated = False
+                if cart_item.product.id not in cart_product_ids:
+                    cart_product_ids[cart_item.product.id] = 1
+            
+            for cart_product_id in cart_product_ids:
+                product_images.append(ProductImage.find_main_product_image(cart_product_id))
+
+        # # load main image for each cart item product
+        # product_images =  []
+        # repeated = False
+        # if cart_items:
+        #     for cart_item in cart_items:
+        #         img_in_list = ProductImage.find_main_product_image(cart_item.product.id)
+        #         repeated = False
+        #         for product_image in product_images:
+        #             if product_image.pk == img_in_list.pk:
+        #                 repeated = True
+        #                 break
+        #         if not repeated:
+        #             product_images.append(img_in_list)
+        #             repeated = False
+
+        
+
 
         # calculate total cost
         total_cost = 0.0

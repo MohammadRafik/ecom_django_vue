@@ -6,7 +6,7 @@ import Vue from 'vue';
 const axios = require('axios').default;
 
 
-// components
+// components from github
 import Dropdown from 'bp-vuejs-dropdown';
 import { VueperSlides, VueperSlide } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
@@ -30,7 +30,7 @@ const app = new Vue({
 
         }
     },
-    delimiters: ["[[","]]"],
+    delimiters: ["[[","]]"], //changing the default because thats what django's template language uses as well
     components: {
         Demo,
         Dropdown,
@@ -45,5 +45,3 @@ const app = new Vue({
     
 });
 
-
-// <onload v-on:load="someFunction()"></onload>

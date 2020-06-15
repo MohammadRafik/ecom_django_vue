@@ -13,9 +13,6 @@ class Cart(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
 
-
-
-
     @classmethod
     def get_cart(cls, request):
         if 'cart_id' in request.session:
@@ -29,9 +26,6 @@ class Cart(models.Model):
         cart.save()
         request.session['cart_id'] = cart.id
         return cart
-
-
-
 
     def get_items(self):
         return self.cart_items.prefetch_related('product').all()
