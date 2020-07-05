@@ -18,20 +18,14 @@ export const vue_slides = {
         axios.get('/api/products/?featured=True')
         .then(function(response_products){
             // need to set up a filter on the framework to search only for products that are featured, same with imgs
-            console.log('making get request to products')
-            console.log(response_products)
             // now we get the image url's
             axios.get('/api/productimages')
             .then(function(response_images){
-              console.log('making get request to product images')
-              console.log(response_images)
-              console.log(response_products.data.results)
               // relate each product to its image
               response_products.data.results.forEach(element_prod => {
                 response_images.data.results.forEach(element_img => {
                   if (element_prod.id == element_img.product.slice(-2,-1)){
                     element_prod.img_url = element_img.image_url
-                    console.log(element_prod.img_url)
                   }
                 });
               });

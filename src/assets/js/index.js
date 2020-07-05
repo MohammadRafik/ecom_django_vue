@@ -11,6 +11,9 @@ import Dropdown from 'bp-vuejs-dropdown';
 import { VueperSlides, VueperSlide } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
 
+import { Carousel, Slide } from "vue-carousel";
+import "./css/vue-carousel.css"
+
 // my custom components
 import Demo from "./components/Demo.vue";
 import Navigation from "./components/navigation.vue";
@@ -39,6 +42,8 @@ const app = new Vue({
         VueperSlides,
         VueperSlide,
         onload,
+        Carousel,
+        Slide,
 
     },
     mixins: [base_global, vue_slides],
