@@ -4,3 +4,7 @@ refactor the repetetive code
 
 security, good error messages. summary: validating user inputs!!!
 
+
+
+important:
+when i drag the vuper slides to move them it still registers as a click and opens the page

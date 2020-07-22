@@ -530,7 +530,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../css-loader/dist/r
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".VueCarousel-slide {\\r\\n    position: relative;\\r\\n    background: #42b983;\\r\\n    color: #fff;\\r\\n    font-family: Arial;\\r\\n    font-size: 24px;\\r\\n    text-align: center;\\r\\n    min-height: 100px;\\r\\n  }\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/assets/js/css/vue-carousel.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".VueCarousel-slide {\\r\\n    position: relative;\\r\\n    background: #FAFAFA;\\r\\n    color: #fff;\\r\\n    font-family: Arial;\\r\\n    font-size: 24px;\\r\\n    text-align: center;\\r\\n    min-height: 100px;\\r\\n  }\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/assets/js/css/vue-carousel.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
