@@ -49,4 +49,3 @@ const app = new Vue({
     mixins: [base_global, vue_slides],
     
 });
-

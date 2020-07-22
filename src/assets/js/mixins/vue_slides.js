@@ -6,25 +6,29 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 export const vue_slides = {
     data: function () {
       return {
-        pauseOnHover: true,
-        autoPlaying: true,
-        internalAutoPlaying: true,
         slides: []
       }
     },
     created: function() {
         // all this function does it fetch the needed data using the api to update slides with the featured products
+        // the proper way to do this would be to set up filters on the django rest framework views so that i can just specify what i want in the url request
         self = this
-        axios.get('/api/products/?featured=True')
+        axios.get('/api/products')
         .then(function(response_products){
-            // need to set up a filter on the framework to search only for products that are featured, same with imgs
-            // now we get the image url's
+          var featured_results = []
+          response_products.data.results.forEach(element =>{
+            if (element.featured == true){
+              featured_results.push(element)
+            }
+          });
+          response_products.data.results = featured_results
+
             axios.get('/api/productimages')
             .then(function(response_images){
               // relate each product to its image
               response_products.data.results.forEach(element_prod => {
                 response_images.data.results.forEach(element_img => {
-                  if (element_prod.id == element_img.product.slice(-2,-1)){
+                  if (element_prod.id == Number(element_img.product.match(/\/[0-9]{1,4}\//g)[0].match(/[0-9]{1,4}/g)[0])){
                     element_prod.img_url = element_img.image_url
                   }
                 });
@@ -58,7 +62,7 @@ export const vue_slides = {
             })
         })
         .catch(function (error){
-            console.log('error with product get request')
+            console.log('error with TEH product get request')
             console.log(error)
         })
         .finally(function(){

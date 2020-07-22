@@ -35,10 +35,10 @@
 {% comment %} here we have a slideshow of featured products {% endcomment %}
 
 {% if featured_products %}    
-    <carousel :navigation-enabled="true" :loop="true" :autoplay="false" :per-page="1" :adjustable-height="true">
+    <carousel :navigation-enabled="false" :loop="true" :autoplay="true" :per-page="1" :center-mode="true" :adjustable-height="false">
         <slide v-for="slide in slides" :key="slide.id">
             <a :href="slide.link">
-                <img :href="slide.image">
+                <img :src="slide.image" width="920" >
             </a>
         </slide>
     </carousel>
