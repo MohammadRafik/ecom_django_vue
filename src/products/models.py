@@ -101,7 +101,7 @@ class Category(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField(max_length=800, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)##########################################################################
+    category = models.ForeignKey(Category,null=True, on_delete=models.SET_NULL)##########################################################################
     product_supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, default='pepega')#################################################################
     current_price = models.DecimalField(max_digits=9,decimal_places=2)
     base_price = models.DecimalField(max_digits=9,decimal_places=2)

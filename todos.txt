@@ -1,10 +1,23 @@
 add back button when on product page
 
-refactor the repetetive code
+refactor the repetetive and bad code                                    -i did a lot of this, still got more to go tho
 
 security, good error messages. summary: validating user inputs!!!
 
+-deleting a category should not have a cascading effect         -wrong, it should, its deleting the child categories
 
+-products should be able to be not in a category section        -done
 
+-need to clean up expired carts in the database
+
+-rename products app to catalog
+
+-i just realized i forgot to take quanitity of each product into account when checking out or adding to cart
+
+-featured products dont show when sorted by category, example when i click on monitor the featured mointors dont show up as normal items, they should
+
+-when resizing to phone size some things dont work as intended, adn teh catagory list gets blocked i think
 important:
-when i drag the vuper slides to move them it still registers as a click and opens the page
+when i drag the vuper slides to move them it still registers as a click and opens the page,             -temporarily fixed by disabling the drag feature.... xd
+
+ADD MORE PRODUCTS!
