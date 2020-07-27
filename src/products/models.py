@@ -140,7 +140,7 @@ class Product(models.Model):
     def get_products_from_list_of_categories(cls, list_of_category_and_all_its_sub_categories):
         products = []
         for single_category in list_of_category_and_all_its_sub_categories:
-            product = list(cls.objects.filter(category = single_category, featured=False))
+            product = list(cls.objects.filter(category = single_category))
             products = products + product
         return products
 

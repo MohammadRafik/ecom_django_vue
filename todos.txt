@@ -17,7 +17,8 @@ security, good error messages. summary: validating user inputs!!!
 -featured products dont show when sorted by category, example when i click on monitor the featured mointors dont show up as normal items, they should
 
 -when resizing to phone size some things dont work as intended, adn teh catagory list gets blocked i think
+
+
 important:
 when i drag the vuper slides to move them it still registers as a click and opens the page,             -temporarily fixed by disabling the drag feature.... xd
 
-ADD MORE PRODUCTS!

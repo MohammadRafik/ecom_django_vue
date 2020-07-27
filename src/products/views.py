@@ -93,7 +93,7 @@ def product_page(request, product_id):
 
 
 
-
+# maybe put this in a different file? it doesnt really fit in this file, this should be imported
 ########################################
 #########product searching##############
 ########################################
@@ -148,6 +148,10 @@ def search_for_something(request):
         found_entries = Product.objects.filter(entry_query)
 
     return found_entries
+    ####################################################
+################# end of product searching functions########################
+#####################################################################
+
 
 
 # maybe this should be the same fucntion as the get in the normalize query class?
