@@ -4,19 +4,19 @@ refactor the repetetive and bad code                                    -i did a
 
 security, good error messages. summary: validating user inputs!!!
 
--deleting a category should not have a cascading effect         -wrong, it should, its deleting the child categories
-
--products should be able to be not in a category section        -done
-
 -need to clean up expired carts in the database
 
 -rename products app to catalog
 
 -i just realized i forgot to take quanitity of each product into account when checking out or adding to cart
 
--featured products dont show when sorted by category, example when i click on monitor the featured mointors dont show up as normal items, they should
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-when resizing to smaller size the page should show less than 1 card per row
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
--when resizing to phone size some things dont work as intended, adn teh catagory list gets blocked i think
+-slideshow is bugged when window size is reduced, this happens when the picture doesnt fit a nd as it slides to the new image it shows parts of the old one...
+
+-on the checkout page instead of listing a products quanitity more than 1x it shows that same product multiple times.
 
 
 important:
