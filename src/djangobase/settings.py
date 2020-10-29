@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     # custom
     'rest_framework',
+    'rest_framework.authtoken',
+
 
 
 
@@ -155,9 +157,20 @@ WEBPACK_LOADER = {
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 1000
+    'PAGE_SIZE': 1000,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        # the below line makes it so that only safe requests can be made. if i disable this it will go to the defualt which enables everyone to make any request they want
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+
+    ],
     
 }
+
 
 
 

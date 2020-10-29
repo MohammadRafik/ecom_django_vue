@@ -75,6 +75,8 @@ def product_page(request, product_id):
     if request.user.is_authenticated:
         username = request.user.get_username()
     else:
+        # this might be bad, what if some1 names themselves anonymous? should creat a sperate class for this
+        # right now this isnt being used anywhere so its not a problem, but it could be
         username = 'anonymous'
 
 
