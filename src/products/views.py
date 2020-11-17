@@ -6,6 +6,8 @@ from rest_framework import viewsets
 from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
+from cart.models import Cart
+from cart.utils import CartManager
 
 # this class is used to find all catagorys in the database bring them
 # in, and check if a catagory is selected and load things accordingly
@@ -67,9 +69,8 @@ class BaseLoader(View):
 
 def product_page(request, product_id):
     # get cart data
-    from cart.models import Cart
-    cart = Cart.get_cart(request)
-    urls_cart = request.build_absolute_uri('/api/cart/' + str(cart.id) + '/')
+    cart_manager = CartManager(request)
+    urls_cart = request.build_absolute_uri('/api/cart/' + str(cart_manager.cart.id) + '/')
     urls_product = request.build_absolute_uri('/api/products/' + str(product_id) + '/')
     
     if request.user.is_authenticated:
@@ -87,7 +88,7 @@ def product_page(request, product_id):
     other_images = ProductImage.find_product_images(product_id)
 
 
-    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart, 'urls_cart':urls_cart, 'urls_product':urls_product, 'username':username})
+    return render(request, 'products/product.html', {'product':main_product, 'main_image':main_image, 'other_images':other_images, 'cart':cart_manager.cart, 'urls_cart':urls_cart, 'urls_product':urls_product, 'username':username})
 
 
 

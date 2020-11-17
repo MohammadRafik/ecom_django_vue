@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': [
         # the below line makes it so that only safe requests can be made. if i disable this it will go to the defualt which enables everyone to make any request they want
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 
     ],
     

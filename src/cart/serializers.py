@@ -14,7 +14,7 @@ class CartSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ('id','url', 'updated_by', 'updated_on', 'created_on', 'created_by')
+        fields = ('id', 'url', 'active', 'updated_by', 'updated_on', 'created_on', 'created_by')
 
 
 class CheckoutDetailsSerializer(serializers.HyperlinkedModelSerializer):
