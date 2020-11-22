@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
 from cart.models import Cart,CartItem, CheckoutDetails
-from products.models import ProductImage
+from products.models import ProductImage, Product
 from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser
 from cart.utils import CartManager
+import re
 # Create your views here.
 
 
@@ -86,6 +87,35 @@ class CheckoutLoader(View):
             return render(request, self.checkout_template_name, {'form':form})
             
 
+def update_cart_items(request):
+    if request.method == 'GET':
+        return HttpResponse('no access')
+    elif request.method == 'POST':
+        cart_manager = CartManager(request)
+        import ast
+        dict_request_body = ast.literal_eval(request.body.decode("UTF-8"))
+        product_url = dict_request_body['product']
+        
+        product_id_with_slashes = re.search(r'\/[0-9]{1,6}\/', product_url).group()
+        product_id = re.search(r'[0-9]{1,6}', product_id_with_slashes).group()
+        product_id = int(product_id)
+        product = Product.objects.get(pk = product_id)
+
+
+        try:
+            cart_item_being_updated = CartItem.objects.get(product = product, cart = cart_manager.cart)
+            cart_item_being_updated.quantity += 1
+            cart_item_being_updated.save()
+        except:
+            # if we get here means cart item doesnt exist so we make a new one with quanitity of 1
+            new_cart_item = CartItem(cart = cart_manager.cart, product = product)
+            new_cart_item.save()
+            
+        return HttpResponse('updated cart items')
+        
+
+
+
 
 
             
@@ -162,8 +192,7 @@ def order_history(request):
 
 def get_cart_items_count(request):
     cart_manager = CartManager(request)
-    item_count_in_cart = cart_manager.cart.get_items_count()
-    return HttpResponse(item_count_in_cart)
+    return HttpResponse(cart_manager.calc_quanitity())
 
 
 # ---------------------------------------------#

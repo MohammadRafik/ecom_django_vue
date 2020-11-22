@@ -53,7 +53,7 @@ export const base_global = {
 
         update_cart: function(cart_url, product_url, quantity = 1, updated_by = 'anonymous'){
             let self= this;
-            axios.post('/api/cartitem/', {
+            axios.post('/cart/update_', {
 
                 cart: cart_url,
                 product: product_url,
@@ -62,7 +62,7 @@ export const base_global = {
                 created_by: updated_by
             })
             .then(function(response){
-                console.log('axios post request succesful')
+                console.log('axios post request succesful, update')
                 self.added_to_cart_successfully = true
                 self.update_cart_item_count()
             })
@@ -73,6 +73,7 @@ export const base_global = {
                 
             })
         },
+        
         delete_item_from_cart: function(cart_item_id){
             axios.delete('/api/cartitem/' + cart_item_id)
             .then(function(response){

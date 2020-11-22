@@ -14,31 +14,10 @@ class Cart(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=100)
 
-    # @classmethod
-    # def create(cls, request):
-    #     if request.user.is_authenticated:
-    #         cart = cls(user = request.user)
-    #         cart.save()
-    #         return cart
-    #     else:
-    #         cart = cls()
-    #         cart.save()
-    #         return cart
 
-    # @classmethod
-    # def get_cart(cls, request):
-    #     if request.user.is_authenticated:
-    #         return cls.objects.get(user = request.user, active=True)
-    #     elif:
-    #         return cls.objects.get(id = request.session.cart_id)
-    #     else:
-    #         return None
 
     def get_items(self):
         return self.cart_items.prefetch_related('product').all()
-
-    def get_items_count(self):
-        return len(self.get_items())
 
     @classmethod
     def delete_unactive_carts(cls):

@@ -2,6 +2,8 @@
 
 python version 3.7.2 for windows
 and make sure u have node.js with npm,and pip3
+to install node nodules from package.json just run:
+npm install
 
 
 

@@ -42,6 +42,12 @@ class CartManager():
         self.cart_items = self.cart.get_items()
         return self.cart_items
 
+    def calc_quanitity(self):
+        self.load_items()
+        total_quantity = 0
+        for cart_item in self.cart_items:
+            total_quantity += cart_item.quantity
+        return total_quantity
 
     def total_cost(self):
         self.total_cost = 0.0
@@ -57,6 +63,7 @@ class CartManager():
     def deactivate(self, request):
         if 'cart_id' in request.session:
             request.session.pop('cart_id')
+
 
         self.cart.active = False
         self.cart.save()
