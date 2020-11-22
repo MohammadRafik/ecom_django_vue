@@ -151,6 +151,8 @@ def order_confirmation(request):
 
     # deactivate this cart now
     cart_manager.deactivate(request)
+    # clean up the cart database
+    Cart.delete_unactive_carts()
 
     return render(request, 'cart/order_confirmation.html', {'cart':cart_manager.cart, 'cart_items':cart_manager.cart_items, 'product_images':product_images, 'total_cost':cart_manager.total_cost,'tax':cart_manager.tax, 'total_cost_with_tax':cart_manager.total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe, 'payment_confirmation':payment_confirmation, 'true_string':'True'})
 
