@@ -54,7 +54,8 @@ class CartManager():
         if hasattr(self, 'cart_items'):
             for cart_item in self.cart_items:
                 self.total_cost += (float(cart_item.product.current_price) * cart_item.quantity)
-            self.tax = self.total_cost * 0.13
+            self.total_cost = round(self.total_cost, 2)
+            self.tax = round(self.total_cost * 0.13, 2)
             self.total_cost_with_tax = round(self.total_cost + self.tax, 2)
             return (self.total_cost, self.tax, self.total_cost_with_tax)
         else:

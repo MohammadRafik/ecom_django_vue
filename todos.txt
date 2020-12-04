@@ -2,14 +2,21 @@ refactor the repetetive and bad code                                            
 
 add back button when on product page
 
-security, validating user inputs!!!
-
 -rename products app to catalog
-
--when resizing to smaller size the page should show less than 1 card per row
-
--slideshow is bugged when window size is reduced, this happens when the picture doesnt fit a nd as it slides to the new image it shows parts of the old one...
 
 when i drag the vuper slides to move them it still registers as a click and opens the page,             -temporarily fixed by disabling the drag feature.... xd
 
-the standard data format between forntend and backend should be json
+
+
+
+
+
+the standard data format between frontend and backend should be json
+
+security, validating and sanitize user inputs!!! should try to do a fuzz test afterwards
+
+xss, cross site scripting?
+
+look up and learn about "django template json"
+
+urlib.parse.quote
