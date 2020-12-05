@@ -9,6 +9,7 @@ from django.urls import reverse
 from cart.models import Cart
 from cart.utils import CartManager
 from products.utils import search_for_something
+import urllib
 
 class BaseLoader(View):
 
@@ -68,8 +69,8 @@ class BaseLoader(View):
 def product_page(request, product_id):
     # get cart data
     cart_manager = CartManager(request)
-    urls_cart = request.build_absolute_uri('/api/cart/' + str(cart_manager.cart.id) + '/')
-    urls_product = request.build_absolute_uri('/api/products/' + str(product_id) + '/')
+    urls_cart = request.build_absolute_uri('/api/cart/' + urllib.parse.quote(str(cart_manager.cart.id)) + '/')
+    urls_product = request.build_absolute_uri('/api/products/' + urllib.parse.quote(str(product_id)) + '/')
     
     if request.user.is_authenticated:
         username = request.user.get_username()
