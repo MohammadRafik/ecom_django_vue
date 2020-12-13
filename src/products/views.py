@@ -7,7 +7,7 @@ from .serializers import CategorySerializer, SupplierSerializer, ProductSerializ
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 from cart.models import Cart
-from cart.utils import CartManager
+from cart.utils.cart_management import CartManager
 from products.utils import search_for_something
 import urllib
 

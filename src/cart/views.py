@@ -4,7 +4,7 @@ from cart.models import Cart,CartItem, CheckoutDetails
 from products.models import ProductImage, Product
 from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser
-from cart.utils import CartManager
+from cart.utils.cart_management import CartManager
 import re
 # Create your views here.
 
