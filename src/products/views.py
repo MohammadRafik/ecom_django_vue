@@ -8,7 +8,7 @@ from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 from cart.models import Cart
 from cart.utils.cart_management import CartManager
-from products.utils import search_for_something
+from products.utils.model_string_search import search_for_something
 import urllib
 
 class BaseLoader(View):
