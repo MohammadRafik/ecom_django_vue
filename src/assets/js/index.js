@@ -29,7 +29,6 @@ const app = new Vue({
     el: '#app',
     data: function(){
         return {
-            xd: '123',
 
         }
     },

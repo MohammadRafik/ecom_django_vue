@@ -25,10 +25,10 @@
 <strong>CDN${{product.current_price}}</strong>
 
 <template>
-<form v-on:submit.prevent="update_cart('{{urls_cart}}','{{urls_product}}',1,'{{username}}')" method="post">
+<form id="cart_products_update_form" v-on:submit.prevent="add_product_to_cart()" method="post">
     <input type="hidden" name="cart" value="{{urls_cart}}">
     <input type="hidden" name="product" value="{{urls_product}}">
-    <input type="hidden" name="quanitity" value="1">
+    <input type="hidden" name="quantity" value="1">
     <input type="hidden" name="updated_by" value="{{username}}">
     <input type="hidden" name="created_by" value="{{username}}">        
     <button type="submit" class="btn-info">Add to cart</button>
@@ -38,6 +38,11 @@
 <transition name="fade">
   <div class="alert alert-success" role="alert" v-if="added_to_cart_successfully">
     The product has been successfully added to the cart
+  </div>
+</transition>
+<transition name="fade">
+  <div class="alert alert-danger" role="alert" v-if="failed_adding_to_cart">
+    there was an error with adding this product to your cart
   </div>
 </transition>
 
