@@ -4,7 +4,7 @@ from products.models import Category, Supplier, Product, ProductImage
 import os
 from rest_framework import viewsets
 from .serializers import CategorySerializer, SupplierSerializer, ProductSerializer, ProductImageSerializer
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
 from django.urls import reverse
 from cart.models import Cart
 from cart.utils.cart_management import CartManager
@@ -12,16 +12,17 @@ from products.utils.model_string_search import search_for_something
 import urllib
 
 class BaseLoader(View):
-
+    # load main page with products based on selected category
     def get(self, request, filter = ''):
         self.all_categories = Category.update_sub_category_lists()
         self.categories = Category.find_main_categories(self.all_categories)
 
-
-
         # here we use the filter to load the products accordingly!
         if filter != '':
-            self.category_from_filter = Category.objects.get(name = filter)
+            try:
+                self.category_from_filter = Category.objects.get(name = filter)
+            except:
+                return HttpResponseNotFound("category not available")
             self.list_of_all_categories_from_filter = Category.get_all_sub_categories(self.category_from_filter)
             self.list_of_all_categories_from_filter.append(self.category_from_filter)
             self.all_products = Product.get_products_from_list_of_categories(self.list_of_all_categories_from_filter)
@@ -69,6 +70,7 @@ class BaseLoader(View):
 def product_page(request, product_id):
     # get cart data
     cart_manager = CartManager(request)
+    # creating the urls needed by the template to make its request to the api
     urls_cart = request.build_absolute_uri('/api/cart/' + urllib.parse.quote(str(cart_manager.cart.id)) + '/')
     urls_product = request.build_absolute_uri('/api/products/' + urllib.parse.quote(str(product_id)) + '/')
     
@@ -76,8 +78,6 @@ def product_page(request, product_id):
         username = request.user.get_username()
     else:
         username = ''
-
-
 
     #find product and give it to template
     main_product = Product.objects.get(id = product_id)
@@ -122,8 +122,9 @@ def product_search(request):
         for product in found_products:
             img = list(ProductImage.find_all_product_images(product.id))
             all_product_images += img
-
-    return render(request, 'products/home.html', {'main_categories':categories, 'all_categories':all_categories, 'products':found_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':all_product_images, 'empty_list':[] })
+    
+    search_string = request.GET['search_string']
+    return render(request, 'products/home.html', {'main_categories':categories, 'all_categories':all_categories, 'products':found_products, 'products_and_carddeck_checker':products_and_carddeck_checker, 'product_images':all_product_images, 'empty_list':[], 'search_string':search_string })
 
 
 
@@ -154,22 +155,9 @@ class ProductView(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    # # this overrides the noraml way this api is used so wont be able to do /api/products anymore
-    # # later i should make it so that it only overrides if request.get[featured] is populated
-    # def get_queryset(self):
-    #     """
-    #     Optionally restricts the returned purchases to a given user,
-    #     by filtering against a `username` query parameter in the URL.
-    #     """
-    #     featured = self.request.GET['featured']
-    #     queryset = Product.objects.filter(featured=featured)
-    #     return queryset
-
-
 class ProductImageView(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
-
 
 
 

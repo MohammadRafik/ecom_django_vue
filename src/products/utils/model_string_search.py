@@ -3,6 +3,7 @@
 ########################################
 from django.db.models import Q
 import re
+from products.models import Product
 
 def normalize_query(query_string,
     findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
