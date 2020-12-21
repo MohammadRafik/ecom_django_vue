@@ -25,6 +25,9 @@ import onload from "./components/onload.vue";
 import {base_global} from "./mixins/base_global.js"
 import {vue_slides} from "./mixins/vue_slides.js"
 
+// some random css
+import "./css/random-css.css"
+
 const app = new Vue({
     el: '#app',
     data: function(){

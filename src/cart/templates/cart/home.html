@@ -18,8 +18,8 @@
                         {% endif %}
                     {% endfor %}
                 {% comment %} button to remove item from cart {% endcomment %}
-                    <form v-on:submit.prevent="delete_item_from_cart('{{cart_item.id}}')" method="delete">    
-                        <button type="submit">remove from cart</button>
+                    <form v-on:submit.prevent="delete_item_from_cart({{cart_item.id}})" method="delete">    
+                        <button class="btn-warning" type="submit">remove from cart</button>
                     </form>
                     
                     </li>
@@ -45,10 +45,20 @@
                 final price:<br><br>
                     <div class="float-right">
                         CDN${{total_cost_with_tax}}
-                        <form action="{% url 'cart:order_confirmation' %}" method="post">
-                        {% csrf_token %}
-                        <checkout_script stripe_key="{{stripe_key}}" total_cost="{{total_cost_for_stripe}}"></checkout_script>
-                        </form>
+
+
+                        {% if cart_items%}
+                            <form action="{% url 'cart:checkout_page' %}" method="get">
+                                <button class="btn-info"> proceed to checkout </button>
+                            </form>
+                        {% endif %}
+
+
+
+
+
+
+
                     </div>
                     {% comment %} checkout {% endcomment %}
                     <br>

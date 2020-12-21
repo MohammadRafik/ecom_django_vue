@@ -8,6 +8,7 @@ export const base_global = {
         added_to_cart_successfully: false,
         cart_item_count: 0,
         failed_adding_to_cart: false,
+        time_out_already_running: false,
       }
     },
     created: function() {
@@ -44,9 +45,11 @@ export const base_global = {
             .then(function(response){
                 self.added_to_cart_successfully = true;
                 self.update_cart_item_count();
+                self.pop_message_timeout();
             })
             .catch(function (error){
                 self.failed_adding_to_cart = true;
+                self.pop_message_timeout();
             })
             .finally(function(){
                 
@@ -61,21 +64,32 @@ export const base_global = {
                 window.location.reload(true);
             })
             .catch(function (error){
-                console.log('error with delete request')
-                console.log(error)
             })
             .finally(function(){
-                
             })
         },
 
-      
-        enter: function(el, done) {
-    
+    //   this isnt being used?????
+        pop_message_timeout: function() {
             var self = this;
-            setTimeout(function() {
-                self.added_to_cart_successfully = false
-            }, 1500); // hide the message after 1.5 seconds
+            if (self.time_out_already_running == true){
+                // reset timeout duration and exit
+                window.clearTimeout(self.cart_timeout)
+                self.cart_timeout = window.setTimeout(function() {
+                    self.added_to_cart_successfully = false;
+                    self.failed_adding_to_cart = false;
+                    self.time_out_already_running = false;
+                    }, 1500)
+                return
+            }
+            else{
+                self.time_out_already_running = true;
+                self.cart_timeout = window.setTimeout(function() {
+                self.added_to_cart_successfully = false;
+                self.failed_adding_to_cart = false;
+                self.time_out_already_running = false;
+                }, 1500)
+            }
         },
       
 

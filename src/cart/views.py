@@ -34,7 +34,7 @@ class CartPageLoader(View):
         stripe_key = settings.STRIPE_PUBLISHABLE_KEY
 
 
-        return render(request, 'cart/home2.html', {'cart':cart_manager.cart, 'cart_items':cart_manager.cart_items, 'product_images':product_images, 'total_cost':cart_manager.total_cost,'tax':cart_manager.tax, 'total_cost_with_tax':cart_manager.total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
+        return render(request, 'cart/home.html', {'cart':cart_manager.cart, 'cart_items':cart_manager.cart_items, 'product_images':product_images, 'total_cost':cart_manager.total_cost,'tax':cart_manager.tax, 'total_cost_with_tax':cart_manager.total_cost_with_tax, 'stripe_key':stripe_key, 'total_cost_for_stripe':total_cost_for_stripe})
 
 
 from cart.forms import CheckoutForm
@@ -95,21 +95,21 @@ def update_cart_items(request):
         import ast
         dict_request_body = ast.literal_eval(request.body.decode("UTF-8"))
         product_url = dict_request_body['product']
-        
-        product_id_with_slashes = re.search(r'\/[0-9]{1,6}\/', product_url).group()
-        product_id = re.search(r'[0-9]{1,6}', product_id_with_slashes).group()
-        product_id = int(product_id)
-        product = Product.objects.get(pk = product_id)
-
-
         try:
-            cart_item_being_updated = CartItem.objects.get(product = product, cart = cart_manager.cart)
-            cart_item_being_updated.quantity += 1
-            cart_item_being_updated.save()
+            product_id_with_slashes = re.search(r'\/[0-9]{1,6}\/', product_url).group()
+            product_id = re.search(r'[0-9]{1,6}', product_id_with_slashes).group()
+            product_id = int(product_id)
+            product = Product.objects.get(pk = product_id)
+            try:
+                cart_item_being_updated = CartItem.objects.get(product = product, cart = cart_manager.cart)
+                cart_item_being_updated.quantity += 1
+                cart_item_being_updated.save()
+            except:
+                # if we get here means cart item doesnt exist so we make a new one with quanitity of 1
+                new_cart_item = CartItem(cart = cart_manager.cart, product = product)
+                new_cart_item.save()
         except:
-            # if we get here means cart item doesnt exist so we make a new one with quanitity of 1
-            new_cart_item = CartItem(cart = cart_manager.cart, product = product)
-            new_cart_item.save()
+            HttpResponse('someone is messing with the hidden html input fields D:')
             
         return HttpResponse('updated cart items')
         

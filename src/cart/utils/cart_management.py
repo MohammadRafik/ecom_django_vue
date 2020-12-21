@@ -65,7 +65,6 @@ class CartManager():
         if 'cart_id' in request.session:
             request.session.pop('cart_id')
 
-
         self.cart.active = False
         self.cart.save()
         return self.cart
