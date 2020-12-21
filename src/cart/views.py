@@ -56,13 +56,16 @@ class CheckoutLoader(View):
             
             stripe_key = settings.STRIPE_PUBLISHABLE_KEY
 
-            user_name = request.user.get_username()
+            if request.user.is_authenticated:
+                user_name = request.user.get_username()
+            else:
+                user_name = ''
 
             # check if checkoutDetails object already exists, if yes update it, if no make one
             if CheckoutDetails.objects.filter(cart_id = cart_manager.cart.id).count():
                 checkout_details = CheckoutDetails.objects.get(cart_id = cart_manager.cart.id)
-                if 'userObject' in locals():
-                    checkout_details.user = user.object
+                if request.user.is_authenticated:
+                    checkout_details.user = request.user
                 checkout_details.cart = cart_manager.cart
                 checkout_details.name_of_receiver = form.cleaned_data['name_of_receiver']
                 checkout_details.main_address = form.cleaned_data['main_address']
@@ -75,7 +78,7 @@ class CheckoutLoader(View):
                 checkout_details.created_by = user_name
                 checkout_details.save()
             else:
-                if 'userObject' in locals():
+                if request.user.is_authenticated:
                     checkout_details = CheckoutDetails( user = request.user, cart = cart_manager.cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user_name, created_by = user_name)
                 else:
                     checkout_details = CheckoutDetails(cart = cart_manager.cart, name_of_receiver = form.cleaned_data['name_of_receiver'], main_address = form.cleaned_data['main_address'], secondary_address = form.cleaned_data['secondary_address'], city = form.cleaned_data['city'], province = form.cleaned_data['province'], postal_code = form.cleaned_data['postal_code'], phone_number = form.cleaned_data['phone_number'], updated_by = user_name, created_by = user_name)
@@ -151,8 +154,7 @@ def order_confirmation(request):
 
     # deactivate this cart now
     cart_manager.deactivate(request)
-    # clean up the cart database
-    Cart.delete_unactive_carts()
+    # cant delete deactiveated carts because they are needed to load order history
 
     return render(request, 'cart/order_confirmation.html', {'cart':cart_manager.cart, 'cart_items':cart_manager.cart_items, 'product_images':product_images, 'total_cost':cart_manager.total_cost,'tax':cart_manager.tax, 'total_cost_with_tax':cart_manager.total_cost_with_tax, 'total_cost_for_stripe':total_cost_for_stripe, 'payment_confirmation':payment_confirmation, 'true_string':'True'})
 
@@ -188,9 +190,11 @@ def order_history(request):
         total_cost_with_tax = round(total_cost_with_tax, 2)
         total_costs.append(total_cost_with_tax)
 
+        order_cartitem_history = zip( order_history, cart_items_list, total_costs)
+        return render(request, 'cart/order_history.html', {'orders':order_history, 'cart_items':cart_items, 'order_cartitem_history':order_cartitem_history, 'product_images':product_images})
     order_cartitem_history = zip( order_history, cart_items_list, total_costs)
+    cart_items = []
     return render(request, 'cart/order_history.html', {'orders':order_history, 'cart_items':cart_items, 'order_cartitem_history':order_cartitem_history, 'product_images':product_images})
-
 
 def get_cart_items_count(request):
     cart_manager = CartManager(request)
