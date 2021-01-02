@@ -28,7 +28,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = [ '127.0.0.1','ec2-54-233-173-123.sa-east-1.compute.amazonaws.com']
 
-CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -38,6 +37,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 #need https to enable the below setting
 # SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 #stripe
 STRIPE_SECRET_KEY = 'sk_test_wg8FOAYcX0GVYDwBDGN6YBA900ZrFMGbOl'

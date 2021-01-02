@@ -1,21 +1,18 @@
 window.$ = window.jQuery = require('jquery');
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// going to load bootstrap using a link in my html so that it loads before this
+// import 'bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import Vue from 'vue';
 // importing axios needs to be done on each component or mixin seperatly
-const axios = require('axios').default;
 
 
 // components from github
 import Dropdown from 'bp-vuejs-dropdown';
-import { VueperSlides, VueperSlide } from 'vueperslides'
-import 'vueperslides/dist/vueperslides.css'
 
 import { Carousel, Slide } from "vue-carousel";
 import "./css/vue-carousel.css"
 
 // my custom components
-import Demo from "./components/Demo.vue";
 import Navigation from "./components/navigation.vue";
 import Checkout_script from "./components/checkout_script.vue";
 import onload from "./components/onload.vue";
@@ -37,12 +34,9 @@ const app = new Vue({
     },
     delimiters: ["[[","]]"], //changing the default because thats what django's template language uses as well
     components: {
-        Demo,
         Dropdown,
         Navigation,
         Checkout_script,
-        VueperSlides,
-        VueperSlide,
         onload,
         Carousel,
         Slide,

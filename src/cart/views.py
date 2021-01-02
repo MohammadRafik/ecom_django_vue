@@ -193,6 +193,8 @@ def order_history(request):
     order_cartitem_history = zip( order_history, cart_items_list, total_costs)
     return render(request, 'cart/order_history.html', {'orders':order_history, 'order_cartitem_history':order_cartitem_history, 'product_images':product_images})
 
+    
+    
 def get_cart_items_count(request):
     cart_manager = CartManager(request)
     return HttpResponse(cart_manager.calc_quanitity())
