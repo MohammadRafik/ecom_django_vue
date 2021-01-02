@@ -16,3 +16,8 @@ webpack commands (windows):
 
 to run requirements.txt do this in cmd:
 pip3 install -r requirements.txt
+
+
+
+clearing static file:
+ python manage.py collectstatic --noinput --clear

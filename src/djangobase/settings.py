@@ -20,12 +20,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6++@jy24bl1!on^5p_3(v=aysnnv!g&l$%$#r&50%pp@7danhe'
+# replaced the previous one since it was on my public github page
+SECRET_KEY = '-pqsb(wr3@nt$w$05@1e$=#yne+e35ac-b4gs=bl0tzu^o20n!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [ '127.0.0.1',]
+ALLOWED_HOSTS = [ '127.0.0.1','ec2-54-233-173-123.sa-east-1.compute.amazonaws.com']
+
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# the below setting redirects http to https, so only secure connections are allowed basically
+# SECURE_SSL_REDIRECT = True
+
+#need https to enable the below setting
+# SESSION_COOKIE_SECURE = True
+
+#stripe
+STRIPE_SECRET_KEY = 'sk_test_wg8FOAYcX0GVYDwBDGN6YBA900ZrFMGbOl'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_moebTzwREoSuQmQpWYNqJJ8w0031fdJlIb'
 
 
 # Application definition
@@ -133,7 +149,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static_for_nginx/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_for_nginx')
 
 
 STATICFILES_DIRS = (
@@ -171,11 +188,3 @@ REST_FRAMEWORK = {
     
 }
 
-
-
-
-
-
-#stripe
-STRIPE_SECRET_KEY = 'sk_test_wg8FOAYcX0GVYDwBDGN6YBA900ZrFMGbOl'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_moebTzwREoSuQmQpWYNqJJ8w0031fdJlIb'
