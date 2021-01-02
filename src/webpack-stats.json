@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"app.js","path":"/home/ham/Documents/ecom_django_vue/src/assets/bundles/app.js"}]},"error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve './css/random-css.css' in '/home/ham/Documents/ecom_django_vue/src/assets/js'"}
+{"status":"done","chunks":{"main":[{"name":"app.js","path":"/home/ham/Documents/active_dev/ecom_django_vue/src/assets/bundles/app.js"}]}}

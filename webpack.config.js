@@ -34,9 +34,9 @@ module.exports = {
         ],
     },
     resolve: {
-        alias: {vue: 'vue/dist/vue.js'}
+        alias: {vue: 'vue/dist/vue.min.js'}
     },
 
-    mode: 'development',
+    mode: 'production',
 
 };
