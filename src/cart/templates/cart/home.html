@@ -18,7 +18,8 @@
                         {% endif %}
                     {% endfor %}
                 {% comment %} button to remove item from cart {% endcomment %}
-                    <form v-on:submit.prevent="delete_item_from_cart({{cart_item.id}})" method="delete">    
+                    <form v-on:submit.prevent="delete_item_from_cart({{cart_item.id}})" method="delete">
+                        {% csrf_token %}    
                         <button class="btn-warning" type="submit">remove from cart</button>
                     </form>
                     

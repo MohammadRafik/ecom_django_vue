@@ -6,7 +6,7 @@ export const base_global = {
     data: function () {
       return {
         added_to_cart_successfully: false,
-        cart_item_count: 0,
+        cart_item_count: '-',
         failed_adding_to_cart: false,
         time_out_already_running: false,
       }

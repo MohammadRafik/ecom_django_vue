@@ -26,6 +26,7 @@
 
 <template>
 <form id="cart_products_update_form" v-on:submit.prevent="add_product_to_cart()" method="post">
+  {% csrf_token %}
     <input type="hidden" name="cart" value="{{urls_cart}}">
     <input type="hidden" name="product" value="{{urls_product}}">
     <input type="hidden" name="quantity" value="1">

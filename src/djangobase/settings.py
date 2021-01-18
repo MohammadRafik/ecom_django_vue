@@ -21,27 +21,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # replaced the previous one since it was on my public github page
-SECRET_KEY = '-pqsb(wr3@nt$w$05@1e$=#yne+e35ac-b4gs=bl0tzu^o20n!'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [ '127.0.0.1','ec2-54-233-173-123.sa-east-1.compute.amazonaws.com']
+ALLOWED_HOSTS = [ '127.0.0.1','mohammadrafik.xyz', 'ec2-18-144-45-7.us-west-1.compute.amazonaws.com']
 
 X_FRAME_OPTIONS = 'DENY'
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # the below setting redirects http to https, so only secure connections are allowed basically
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
-#need https to enable the below setting
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+#need https to enable the below setting to true
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 #stripe
-STRIPE_SECRET_KEY = 'sk_test_wg8FOAYcX0GVYDwBDGN6YBA900ZrFMGbOl'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_moebTzwREoSuQmQpWYNqJJ8w0031fdJlIb'
+STRIPE_SECRET_KEY = ''
+STRIPE_PUBLISHABLE_KEY = ''
 
 
 # Application definition

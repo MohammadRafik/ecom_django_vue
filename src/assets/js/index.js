@@ -1,5 +1,6 @@
-window.$ = window.jQuery = require('jquery');
-// going to load bootstrap using a link in my html so that it loads before this
+
+// going to load bootstrap and jquery using links in my html so that my app.js file isnt too big and loads quickly (since im going to run this site on a slow server its better to load stuff from external fast servers)
+// window.$ = window.jQuery = require('jquery');
 // import 'bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import Vue from 'vue';
