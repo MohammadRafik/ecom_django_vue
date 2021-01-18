@@ -1,4 +1,4 @@
-eCommerce website made with django and vue.js hosted on an AWS EC2 instance inside a docker container
+####eCommerce website made with django and vue.js hosted on an AWS EC2 instance inside a docker container
 
 here is the [link to the live demo](https://mohammadrafik.xyz/)
 
@@ -11,15 +11,17 @@ please note the commands below are for the bash shell on linux, you will need to
 5. activate the virtual env `source env/bin/activate`
 6. run `pip3 install -r requirements.txt`
 now you need to run a local server using django, so do this:
-7. run `python3 ./src/manage.py runserver`
+7. run `python3 src/manage.py runserver`
+on a browser if you go to 127.0.0.1:8000 you should be able to see the site now
 
 to also setup the front-end with webpacks and generate a new bundled js file follow the steps below:
 1. make sure you are in the correct path as the steps before, you should be in `ecom_django_vue`
 2. run `npm install`
 3. run `./node_modules/.bin/webpack --config ./webpack.config.js`
+this will create a new app.js file and replace the old one. its located at ./src/assets/bundles/app.js
 
-to see deployment version go to the deployment branch
+to see the deployment version go to the [deployment branch](https://github.com/MohammadRafik/ecom_django_vue/tree/deployment)
 
-demo: 
+gif demo: 
 
 ![](ecom_demo.gif)
