@@ -1,4 +1,4 @@
-####eCommerce website made with django and vue.js hosted on an AWS EC2 instance inside a docker container
+#### eCommerce website made with django and vue.js hosted on an AWS EC2 instance inside a docker container
 
 here is the [link to the live demo](https://mohammadrafik.xyz/)
 
