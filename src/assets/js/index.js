@@ -1,4 +1,4 @@
-window.$ = window.jQuery = require('jquery');
+// window.$ = window.jQuery = require('jquery');
 // going to load bootstrap using a link in my html so that it loads before this
 // import 'bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
