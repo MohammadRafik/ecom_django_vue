@@ -1,6 +1,5 @@
 #### eCommerce website made with django and vue.js hosted on an AWS EC2 instance inside a docker container
 
-here is the [link to the live demo](https://mohammadrafik.xyz/)
 
 ## How to set up
 please note the commands below are for the bash shell on linux, you will need to make some changes to the commands to make it work on windows
